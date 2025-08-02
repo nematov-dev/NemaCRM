@@ -1,0 +1,39 @@
+{% extends 'page/base.html' %}
+{% load static %}
+
+{% block title %}Category Detail{% block title %}
+
+{% block content %}
+<div class="container my-5">
+  <div class="card shadow-sm border-0">
+    <div class="card-body">
+      <h4 class="mb-4">📝 Kategoriyani tahrirlash</h4>
+
+      <form>
+        <!-- Mahsulot nomi -->
+        <div class="mb-3">
+          <label for="name" class="form-label">Kategoriya nomi</label>
+          <input type="text" class="form-control" id="name" value="Ichimliklar">
+        </div>
+
+        <!-- Kategoriyasi -->
+        <div class="mb-3">
+          <label for="category" class="form-label">Kategoriyasi</label>
+          <select class="form-select" id="category">
+            <option disabled>Kategoriyani tanlang</option>
+            <option>Ichimliklar</option>
+            <option selected>Shirinliklar</option>
+            <option>Non mahsulotlari</option>
+            <option>Go‘sht mahsulotlari</option>
+            <option>Boshqalar</option>
+          </select>
+        </div>
+
+        <!-- Tugmalar -->
+        <button type="submit" class="btn btn-success">Saqlash</button>
+        <button type="button" class="btn btn-secondary" onclick="location.href='categories-table.html'">Orqaga qaytish</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% block content %}

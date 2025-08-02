@@ -1,0 +1,55 @@
+{% extends 'page/base.html' %}
+{% load static %}
+
+{% block title %}Category Add{% endblock title %}
+
+{% block content %}
+{% if messages %}
+  {% for message in messages %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  {% endfor %}
+{% endif %}
+<div class="container my-5">
+  <div class="centered-form">
+  <h2 class="text-center mb-4">📃 Kategoriyalar ro‘yxatini kiriting</h2>
+
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <!-- CSRF token qo‘shilsa yaxshi -->
+    <table class="table table-bordered table-hover table-responsive text-center excel-style">
+
+      <thead>
+        <tr>
+          <th>Kategoriya nomi</th>
+        </tr>
+      </thead>
+      <tbody id="kategoriyalar-jadvali">
+          <td>
+              <input type="text" name="nomlar[]" class="form-control form-control-sm w-50" required>
+          </td>
+      </tbody>
+    </table>
+
+    <div class="d-flex justify-content-between">
+      <button type="button" class="btn btn-outline-secondary" onclick="qatorQosh()">➕ Qator qo‘shish</button>
+      <button type="submit" class="btn btn-primary">✅ Saqlash</button>
+    </div>
+  </form>
+</div>
+</div>
+<script>
+  function qatorQosh() {
+    const table = document.getElementById("kategoriyalar-jadvali");
+    const newRow = document.createElement("tr");
+    newRow.innerHTML = `
+    <td>
+      <input type="text" name="nomlar[]" class="form-control form-control-sm w-50" required>
+     </td>
+    `;
+    table.appendChild(newRow);
+  }
+</script>
+{% endblock content %}

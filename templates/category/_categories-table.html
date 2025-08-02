@@ -1,0 +1,56 @@
+<div class="table-wrapper table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>
+            <h6>#</h6>
+          </th>
+          <th>
+            <h6>Nomi</h6>
+          </th>
+          <th>
+            <h6>Tahrirlash</h6>
+          </th>
+          <th>
+            <h6>O'chirish</h6>
+          </th>
+        </tr>
+        <!-- end table row-->
+      </thead>
+      <tbody>
+        {% if categories %}
+            {% for cat in categories %}
+            <tr>
+                <td class="min-width">
+                <p>{{ cat.id }}</p>
+                </td>
+                <td class="min-width">
+                <p>{{ cat.name }}</p>
+                </td>
+                <td>
+                <div class="action">
+                    <button class="edit">
+                    <i class="lni lni-pencil"></i>
+                    </button>
+                </div>
+                </td>
+                <td>
+                <div class="action">
+                    <button class="text-danger">
+                    <i class="lni lni-trash-can"></i>
+                    </button>
+                </div>
+                </td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <tr>
+              <td colspan="5" class="text-center text-muted">
+                Mahsulot mavjud emas
+              </td>
+            </tr>
+        {% endif %}
+      </tbody>
+    </table>
+    <!-- end table -->
+  </div>

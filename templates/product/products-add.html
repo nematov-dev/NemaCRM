@@ -1,0 +1,95 @@
+{% extends 'page/base.html' %}
+{% load static %}
+
+{% block title %}Product-Add{% endblock title %}
+
+{% block content %}
+{% if messages %}
+  {% for message in messages %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  {% endfor %}
+{% endif %}
+
+<div class="container my-5">
+  <h2 class="text-center mb-4">🛒 Mahsulotlar ro‘yxatini kiriting</h2>
+
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <!-- CSRF token qo‘shilsa yaxshi -->
+    <table class="table table-bordered table-hover excel-style">
+      <thead>
+        <tr>
+          <th>Rasm ( ixtiyoriy )</th>
+          <th>Nomi</th>
+          <th>Narxi (so‘m)</th>
+          <th>Birlik</th>
+          <th>Miqdori</th>
+          <th>Kategoriya</th>
+        </tr>
+      </thead>
+      <tbody id="mahsulot-jadvali">
+        <tr>
+          <td><input type="file" name="rasmlar[]" class="form-control form-control-sm"></td>
+          <td><input type="text" name="nomlar[]" class="form-control form-control-sm" required></td>
+          <td><input type="number" name="narxlar[]" class="form-control form-control-sm" required></td>
+          <td>
+            <select name="birliklar[]" class="form-select form-select-sm" required>
+              <option value="">Tanlang</option>
+              <option value="dona">dona</option>
+              <option value="kg">kg</option>
+            </select>
+          </td>
+          <td><input type="number" name="miqdorlar[]" class="form-control form-control-sm" required></td>
+          <td>
+            <select name="kategoriyalar[]" class="form-select form-select-sm" required>
+              <option value="">Tanlang</option>
+              {% for category in categories %}
+                <option value="{{ category.id }}">{{ category.name }}</option>
+              {% endfor %}
+            </select>
+            
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="d-flex justify-content-between">
+      <button type="button" class="btn btn-outline-secondary" onclick="qatorQosh()">➕ Qator qo‘shish</button>
+      <button type="submit" class="btn btn-primary">✅ Saqlash</button>
+    </div>
+  </form>
+</div>
+
+<script>
+  function qatorQosh() {
+    const table = document.getElementById("mahsulot-jadvali");
+    const newRow = document.createElement("tr");
+    newRow.innerHTML = `
+      <td><input type="file" name="rasmlar[]" class="form-control form-control-sm"></td>
+      <td><input type="text" name="nomlar[]" class="form-control form-control-sm" required></td>
+      <td><input type="number" name="narxlar[]" class="form-control form-control-sm" required></td>
+      <td>
+            <select name="birliklar[]" class="form-select form-select-sm" required>
+              <option value="">Tanlang</option>
+              <option value="dona">dona</option>
+              <option value="kg">kg</option>
+            </select>
+          </td>
+      <td><input type="number" name="miqdorlar[]" class="form-control form-control-sm" required></td>
+      <td>
+            <select name="kategoriyalar[]" class="form-select form-select-sm" required>
+              <option value="">Tanlang</option>
+              {% for category in categories %}
+                <option value="{{ category.id }}">{{ category.name }}</option>
+              {% endfor %}
+            </select>
+            
+          </td>
+    `;
+    table.appendChild(newRow);
+  }
+</script>
+{% endblock content %}

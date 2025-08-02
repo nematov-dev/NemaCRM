@@ -1,0 +1,51 @@
+{% extends 'page/base.html' %}
+{% load static %}
+
+{% block title %}Notification{% endblock title %}
+
+{% block content %}
+<!-- ========== notification-wrapper start ========== -->
+<div class="notification-wrapper">
+  <div class="container-fluid">
+    <!-- ========== title-wrapper start ========== -->
+    <div class="title-wrapper pt-30">
+      <div class="row align-items-center">
+        <div class="col-md-6">
+          <div class="title">
+            <h2>Xabarnomalar</h2>
+          </div>
+        </div>
+        
+      </div>
+      <!-- end row -->
+    </div>
+    <!-- ========== title-wrapper end ========== -->
+    {% for message in messages %}
+      <div class="card-style mb-3">
+        <div class="single-notification">
+          <div class="checkbox">
+            <div class="form-check checkbox-style mb-20">
+            </div>
+          </div>
+            <div class="notification">
+              <div class="image secondary-bg">
+                <span>{{ message.title|slice:1 }}</span>
+              </div>
+              <a href="#0" class="content">
+                <h6>{{ message.title}}</h6>
+                <p class="text-sm text-gray">
+                  {{ message.message }} ...
+                </p>
+                <span class="text-sm text-medium text-gray">{{ message.created_at|date:"d m Y | H:i" }}
+                </span>
+              </a>
+            </div>
+        </div>
+
+      </div>
+    {% endfor %}
+  </div>
+  <!-- end container -->
+</div>
+<!-- ========== notification-wrapper start ========== -->
+{% endblock content %}

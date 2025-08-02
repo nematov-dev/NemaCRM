@@ -1,0 +1,84 @@
+{% extends 'page/base.html' %}
+{% load static %}
+
+{% block title %}Product Detail{% endblock title %}
+
+{% block content %}
+<div class="container my-5">
+  {% if messages %}
+  {% for message in messages %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  {% endfor %}
+{% endif %}
+
+  <div class="card shadow-sm border-0">
+    <div class="card-body">
+      <h4 class="mb-4">📝 Mahsulotni tahrirlash</h4>
+
+      <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+      
+        <!-- Mahsulot rasmi -->
+        <div class="mb-3">
+          <label for="image" class="form-label">Mahsulot rasmi</label><br>
+
+          {% if product.image %}
+            <img src="{{ product.image.url }}" alt="Mahsulot rasmi" class="img-thumbnail mb-2" style="max-width: 150px;">
+          {% endif %}
+
+          <input type="file" class="form-control" id="image" name="image">
+        </div>
+      
+        <!-- Mahsulot nomi -->
+        <div class="mb-3">
+          <label for="name" class="form-label">Mahsulot nomi</label>
+          <input type="text" class="form-control" id="name" name="name" value="{{ product.name }}">
+        </div>
+      
+        <!-- Narxi -->
+        <div class="mb-3">
+          <label for="price" class="form-label">Narxi (so'mda)</label>
+          <input type="number" class="form-control" id="price" name="price" value="{{ product.price }}">
+        </div>
+      
+        <!-- Birligi -->
+        <div class="mb-4">
+          <label for="unit" class="form-label">Birligi</label>
+          <select class="form-select" id="unit" name="unity">
+            <option disabled>Birlikni tanlang</option>
+            <option value="dona" {% if product.unity == "dona" %}selected{% endif %}>dona</option>
+            <option value="kg" {% if product.unity == "kg" %}selected{% endif %}>kg</option>
+          </select>
+        </div>
+      
+        <!-- Soni -->
+        <div class="mb-3">
+          <label for="quantity" class="form-label">Miqdori</label>
+          <input type="number" class="form-control" id="quantity" name="count" value="{{ product.count }}">
+        </div>
+      
+        <!-- Kategoriyasi -->
+        <div class="mb-3">
+          <label for="category" class="form-label">Kategoriyasi</label>
+          <select class="form-select" id="category" name="category" multiple>
+            {% for cat in categories %}
+              <option value="{{ cat.id }}"
+                {% if cat in product.category.all %}
+                  selected
+                {% endif %}
+              >{{ cat.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      
+        <!-- Tugmalar -->
+        <button type="submit" class="btn btn-success">Saqlash</button>
+        <a href="{% url 'app_product:product-list' %}" class="btn btn-secondary">Orqaga</a>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock content %}

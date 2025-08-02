@@ -1,0 +1,106 @@
+{% extends 'page/base.html' %}
+{% load static %}
+
+{% block title %}Category List{% endblock title %}
+
+{% block content %}
+<div class="container-fluid">
+  <!-- ========== title-wrapper start ========== -->
+  <div class="title-wrapper pt-30">
+    <div class="row align-items-center">
+      <div class="col-md-6">
+        <div class="title">
+          <h2>Kategoriyalar</h2>
+        </div>
+      </div>
+      <!-- 🔍 Qidiruv formasi boshlandi -->
+
+      <form id="category-search-form" class="category-search-form" method="GET" action="{% url 'app_category:category-list' %}">
+        <div class="input-group">
+          <input id="search-input-category" type="text" class="form-control rounded-start-pill py-3 px-4 fs-9" name="category-search" placeholder="Mahsulot nomi bo‘yicha qidiring...">
+          <button class="btn btn-primary rounded-end-pill px-4 fs-5" type="submit">Qidirish</button>
+        </div>
+      </form>
+
+      <script>
+        const searchInput = document.getElementById('search-input-category');
+      
+        searchInput.addEventListener('input', function () {
+          const query = searchInput.value;
+      
+          fetch("{% url 'app_category:category-list' %}?category-search=" + encodeURIComponent(query), {
+            headers: {
+              'X-Requested-With': 'XMLHttpRequest'
+            }
+          })
+          .then(res => res.text())
+          .then(data => {
+            document.getElementById('category-list').innerHTML = data;
+          });
+        });
+      </script>
+      
+      
+      <!-- 🔍 Qidiruv formasi tugadi -->
+
+      
+    </div>
+    <!-- end row -->
+  </div><br>
+
+  <!-- Table categories start -->
+  <!-- ========== tables-wrapper start ========== -->
+  <div class="tables-wrapper">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card-style mb-30">
+          <h6 class="mb-10">Kategoriyalar</h6>
+          <p class="text-sm mb-20">
+            Bu yerda do'koningizda mavjud barcha mahsulotlarning kategoriyalarini ko'rishingiz, tahrirlashigiz, o'chirishingiz  mumkin.
+          </p>
+          <div id="category-list">
+            {% include "category/_categories-table.html" %}
+          </div>
+        </div>
+        <!-- end card -->
+      </div>
+      <!-- end col -->
+    </div>
+    <!-- end row -->
+    
+    <!-- Pagination qismi -->
+    <nav aria-label="Sahifalash">
+      <ul class="pagination justify-content-center">
+        {% if categories.has_previous %}
+          <li class="page-item">
+            <a class="page-link" href="?category-page={{ categories.previous_page_number }}">Oldingi</a>
+          </li>
+        {% endif %}
+      
+        {% for num in categories.paginator.page_range %}
+          {% if num == 1 or num == categories.paginator.num_pages or num >= categories.number|add:'-2' and num <= categories.number|add:'2' %}
+            {% if categories.number == num %}
+              <li class="page-item active"><a class="page-link">{{ num }}</a></li>
+            {% else %}
+              <li class="page-item"><a class="page-link" href="?category-page={{ num }}">{{ num }}</a></li>
+            {% endif %}
+          {% elif num == categories.number|add:'-3' or num == categories.number|add:'3' %}
+            <li class="page-item disabled"><span class="page-link">…</span></li>
+          {% endif %}
+        {% endfor %}
+      
+        {% if categories.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="?category-page={{ categories.next_page_number }}">Keyingi</a>
+          </li>
+        {% endif %}
+      </ul>
+      
+    </nav>
+
+  </div>
+  <!-- ========== tables-wrapper end ========== -->
+  <!-- Table categories end -->
+
+</div>
+{% endblock content %}

@@ -1,0 +1,153 @@
+{% extends 'page/base.html' %}
+{% load static %}
+
+{% block title %}Product List {% endblock title %}
+
+{% block content %}
+<div class="container-fluid">
+  <!-- ========== title-wrapper start ========== -->
+  <div class="title-wrapper pt-30">
+    <div class="row align-items-center">
+      <div class="col-md-12">
+        <div class="title">
+          <h2>Omborxona</h2>
+        </div>
+      </div>
+
+      <!-- 🔍 Qidiruv formasi -->
+      <div class="row mt-0 mb-4 justify-content-center">
+        <div class="col-12 col-md-6">
+          <form class="search-form" method="GET" action="">
+            <div class="input-group">
+              <input id="searchProducts" type="text" class="form-control rounded-start-pill py-3 px-4 fs-9" name="product-search" placeholder="Mahsulot nomi bo‘yicha qidiring...">
+              <button class="btn btn-primary rounded-end-pill px-4 fs-5" type="submit">Qidirish</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <script>
+        $(document).ready(function() {
+          function filterProducts() {
+            let query = $('#searchProducts').val();
+            let category = $('#filterCategory').val();
+            let quantity = $('#filterQuantity').val();
+      
+            $.ajax({
+              url: "{% url 'app_product:product-list' %}",
+              data: {
+                'product-search': query,
+                'category': category,
+                'quantity_status': quantity
+              },
+              success: function(data) {
+                $('#product-list').html(data);
+              },
+              error: function(xhr, status, error) {
+                console.log("Xatolik:", error);
+              }
+            });
+          }
+      
+          // Har bir filter o‘zgarganda ishga tushadi
+          $('#searchProducts').on('input', filterProducts);
+          $('#filterCategory').on('change', filterProducts);
+          $('#filterQuantity').on('change', filterProducts);
+        });
+      </script>
+
+      <!-- 🔍 Qidiruv formasi tugadi -->
+      
+    </div>
+    <!-- end row -->
+  </div>
+  <!-- ========== title-wrapper end ========== -->
+
+  <!-- ========== tables-wrapper start ========== -->
+  <div class="tables-wrapper">
+
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card-style mb-30">
+          <h6 class="mb-10">Mahsulotlar</h6>
+          <p class="text-sm mb-20">
+            Bu yerda do'koningizda mavjud barcha mahsulotlarni ko'rishingiz, tahrirlashigiz, o'chirishingiz mumkin.
+          </p>
+        
+          <!-- 🔽 Filtrlar: Kategoriya va Miqdor -->
+          <form method="get" id="filterForm">
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <div class="row align-items-center g-2">
+                  <!-- Kategoriya -->
+                  <div class="col-auto d-flex align-items-center gap-2">
+                    <label for="category" class="fw-bold mb-0">Kategoriya:</label>
+                    <select name="category" id="filterCategory" class="form-select form-select-sm" style="width: auto;" onchange="document.getElementById('filterForm').submit();">
+                      <option value="">Barchasi</option>
+                      {% for cat in categories %}
+                        <option value="{{ cat.id }}" {% if request.GET.category == cat.id|stringformat:"s" %}selected{% endif %}>{{ cat.name }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+          
+                  <!-- Miqdor -->
+                  <div class="col-auto d-flex align-items-center gap-2">
+                    <label for="quantity_status" class="fw-bold mb-0">Miqdor:</label>
+                    <select name="quantity_status" id="filterQuantity" class="form-select form-select-sm" style="width: auto;" onchange="document.getElementById('filterForm').submit();">
+                      <option value="">Barchasi</option>
+                      <option value="bor" {% if request.GET.quantity_status == "bor" %}selected{% endif %}>Bor</option>
+                      <option value="kam" {% if request.GET.quantity_status == "kam" %}selected{% endif %}>Kam qolgan</option>
+                      <option value="yoq" {% if request.GET.quantity_status == "yoq" %}selected{% endif %}>Qolmagan</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+          
+<br>
+      <!-- end col -->
+          <div id="product-list" >
+            {% include "product/_products-table.html" %}
+          </div>
+        </div>
+        <!-- end card -->
+      </div>
+      <!-- end col -->
+      <!-- Pagination qismi -->
+      <nav aria-label="Sahifalash">
+        <ul class="pagination justify-content-center">
+          {% if products.has_previous %}
+            <li class="page-item">
+              <a class="page-link" href="?product-page={{ products.previous_page_number }}">Oldingi</a>
+            </li>
+          {% endif %}
+        
+          {% for num in products.paginator.page_range %}
+            {% if num == 1 or num == products.paginator.num_pages or num >= products.number|add:'-2' and num <= products.number|add:'2' %}
+              {% if products.number == num %}
+                <li class="page-item active"><a class="page-link">{{ num }}</a></li>
+              {% else %}
+                <li class="page-item"><a class="page-link" href="?product-page={{ num }}">{{ num }}</a></li>
+              {% endif %}
+            {% elif num == products.number|add:'-3' or num == products.number|add:'3' %}
+              <li class="page-item disabled"><span class="page-link">…</span></li>
+            {% endif %}
+          {% endfor %}
+        
+          {% if products.has_next %}
+            <li class="page-item">
+              <a class="page-link" href="?product-page={{ products.next_page_number }}">Keyingi</a>
+            </li>
+          {% endif %}
+        </ul>
+        
+      </nav>
+
+    </div>
+    <!-- end row -->
+  </div>
+  <!-- ========== tables-wrapper end ========== -->
+
+</div>
+{% endblock content %}

@@ -1,0 +1,219 @@
+{% extends 'page/base.html' %}
+{% load static %}
+
+{% block stat_css %}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock stat_css %}
+
+{% block title %}Stat
+{% endblock title %}
+
+{% block content %}
+<div class="container py-5">
+
+  <!-- Sarlavha -->
+  <h2 class="mb-4 fw-bold text-center">📊 Sotuvlar Statistikasi</h2>
+
+  <!-- Karta bloklari -->
+  <div class="row g-4 mb-5">
+    <div class="col-md-3">
+      <div class="card shadow-sm border-0 text-white bg-primary">
+        <div class="card-body">
+          <h6 class="card-title">Bugungi Sotuv</h6>
+          <h4>550 000 so'm</h4>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card shadow-sm border-0 text-white bg-success">
+        <div class="card-body">
+          <h6 class="card-title">Haftalik Sotuv</h6>
+          <h4>3 200 000 so'm</h4>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card shadow-sm border-0 text-white bg-warning">
+        <div class="card-body">
+          <h6 class="card-title">Oylik Sotuv</h6>
+          <h4>12 500 000 so'm</h4>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card shadow-sm border-0 text-white bg-danger">
+        <div class="card-body">
+          <h6 class="card-title">Yillik Sotuv</h6>
+          <h4>85 000 000 so'm</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container my-5">
+    <h2 class="text-center mb-4">📅 Sana bo'yicha savdo statistikasi</h2>
+    <form class="row justify-content-center g-3 mb-4">
+      <div class="col-md-4">
+        <input type="date" class="form-control form-control-lg" name="sana" required>
+      </div>
+      <div class="col-md-2">
+        <button type="submit" class="btn btn-lg btn-dark w-100">Ko‘rish</button>
+      </div>
+    </form>
+  
+    <!-- Sana uchun natija ko‘rinishi -->
+    <div class="card shadow-lg p-4 rounded-4">
+      <h5 class="mb-3">📌 2025-07-29 uchun savdolar:</h5>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item d-flex justify-content-between">
+          <span>🍞 Non (10 dona)</span>
+          <span>20,000 so‘m</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between">
+          <span>🥛 Sut (5 litr)</span>
+          <span>30,000 so‘m</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between fw-bold">
+          <span>Jami tushum:</span>
+          <span>50,000 so‘m</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+  
+
+  <!-- Grafik -->
+  <div class="card shadow-sm border-0 mb-5">
+    <div class="card-body">
+      <h5 class="card-title mb-3">🗓 Oxirgi 30 kunlik sotuvlar</h5>
+      <canvas id="salesChart" height="100"></canvas>
+    </div>
+  </div>
+
+<!-- Oxirgi 12 oylik savdolar -->
+<div class="card shadow-sm border-0 mb-5">
+    <div class="card-body">
+      <h5 class="card-title mb-3">📈 Oxirgi 12 oylik savdo statistikasi</h5>
+      <canvas id="yearlySalesChart" height="100"></canvas>
+    </div>
+  </div>
+  
+
+  <!-- Top 5 mahsulotlar -->
+  <div class="card shadow-sm border-0 mb-5">
+    <div class="card-body">
+      <h5 class="card-title mb-3">🏆 Eng ko‘p sotilgan mahsulotlar</h5>
+      <ol class="list-group list-group-numbered">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          Coca-Cola 1.5L <span class="badge bg-primary rounded-pill">320 dona</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          Non <span class="badge bg-primary rounded-pill">270 dona</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          Shirinlik <span class="badge bg-primary rounded-pill">190 dona</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          Mineral suv <span class="badge bg-primary rounded-pill">150 dona</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          Makaroni <span class="badge bg-primary rounded-pill">120 dona</span>
+        </li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- Ombordagi mahsulotlar -->
+  <div class="row g-4">
+    <div class="col-md-6">
+      <div class="card border-0 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">📦 Ombordagi mahsulotlar</h5>
+          <p>Jami: <strong>1450 dona</strong></p>
+          <p>Tugab qolgan: <strong class="text-danger">12 ta</strong></p>
+          <p>Tugash arafasida: <strong class="text-warning">24 ta</strong></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Kategoriya bo‘yicha tahlil -->
+    <div class="col-md-6">
+      <div class="card border-0 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">📁 Kategoriya bo‘yicha sotuv</h5>
+          <ul class="list-group">
+            <li class="list-group-item d-flex justify-content-between">
+              Ichimliklar <span class="badge bg-success">4.2 mln</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+              Non mahsulotlari <span class="badge bg-success">3.1 mln</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+              Go‘sht <span class="badge bg-success">2.8 mln</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Chart.js config -->
+<script>
+const ctx = document.getElementById('salesChart').getContext('2d');
+const salesChart = new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels: ['1-kun', '2-kun', '3-kun', '4-kun', '5-kun', '6-kun', '7-kun','8-kun','9-kun','10-kun','11-kun','12-kun','13-kun','14-kun','15-kun','16-kun','17-kun','18-kun','19-kun','20-kun','21-kun','22-kun','23-kun','24-kun','25-kun','26-kun','27-kun','28-kun','29-kun','30-kun'],
+    datasets: [{
+      label: 'Sotuv (so‘m)',
+      data: [700000, 820000, 650000, 90000, 720000, 880000, 550000,100000,150000,500000,100000,22222,432123,1234321,345432,87654,876543,76543,765432,876543,876543,987543,345678,87654,345678,6543,456789,543333,34567,876544],
+      backgroundColor: '#0d6efd',
+      barThickness: 15
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: { mode: 'index', intersect: false }
+    },
+    scales: {
+      y: { beginAtZero: true }
+    }
+  }
+});
+
+const yearlyCtx = document.getElementById('yearlySalesChart').getContext('2d');
+const yearlySalesChart = new Chart(yearlyCtx, {
+  type: 'bar',
+  data: {
+    labels: ['Avgust', 'Sentabr', 'Oktabr', 'Noyabr', 'Dekabr', 'Yanvar', 'Fevral', 'Mart', 'Aprel', 'May', 'Iyun', 'Iyul'],
+    datasets: [{
+      label: 'Sotuv (so‘m)',
+      data: [4200000, 5000000, 4650000, 5500000, 4700000, 3900000, 4100000, 4300000, 4900000, 5100000, 4750000, 4950000],
+      backgroundColor: '#198754'
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: { mode: 'index', intersect: false }
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        ticks: {
+          callback: value => value.toLocaleString() + " so‘m"
+        }
+      }
+    }
+  }
+});
+
+
+</script>
+{% endblock content %}
