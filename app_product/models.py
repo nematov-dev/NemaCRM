@@ -28,6 +28,7 @@ class ProductModel(models.Model):
         return self.name
     
     class Meta:
+        ordering = ["-created_at"]
         verbose_name = "Product"
         verbose_name_plural = "Products"
     

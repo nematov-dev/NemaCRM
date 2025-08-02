@@ -1,0 +1,66 @@
+<div class="row">
+    <!-- Mahsulot kartasi -->
+    {% if products %}
+      {% for product in products %}
+        <div class="col-lg-2 col-md-4 col-sm-6 mb-4">
+          <div class="card h-100 text-center p-2">
+            <div class="card-img-top d-flex align-items-center justify-content-center">
+              {% if product.image %}
+                <img src="{{ product.image.url }}" style="max-width: 100%; max-height: 100%;" alt="Mahsulot rasmi">
+              {% else %}
+                <span class="text-muted text-center" style="font-size: 12px; width: 100px; height: 100px;"> <br><br>  Rasm mavjud emas</span>
+              {% endif %}
+            </div>
+            
+            <div class="card-body">
+              <h6 class="text-bold mb-10">{{ product.name }}</h6>
+              <h6 class="card-title">{{ product.price }} so'm</h6>
+              <div class="d-flex justify-content-center align-items-center mb-2">
+                <button class="btn btn-outline-secondary" style="padding: 2px 12px; font-size: 18px; background-color: rgb(210, 95, 95); color: white;" onclick="decreaseQty(this)">−</button>
+                  <input type="number" value="1" min="1" class="form-control mx-1 text-center bold" style="width: 70px; font-size: 12px;">
+                  <button class="btn btn-outline-secondary" style="padding: 2px 12px; font-size: 18px; background-color: rgb(83, 176, 83); color: white;" onclick="increaseQty(this)">+</button>
+              </div>
+              <button class="btn btn-primary btn-sm px-2 py-2" style="font-size: 14px;">🛒 Savatga</button>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <h6>Mahsulot mavjud emas</h6>
+    {% endif %}
+  <!-- Pagination qismi -->
+  <nav aria-label="Sahifalash">
+    <ul class="pagination justify-content-center">
+      {% if products.has_previous %}
+        <li class="page-item">
+          <a class="page-link" href="?dashboard-page={{ products.previous_page_number }}">Oldingi</a>
+        </li>
+      {% endif %}
+    
+      {% for num in products.paginator.page_range %}
+        {% if num == 1 or num == products.paginator.num_pages or num >= products.number|add:'-2' and num <= products.number|add:'2' %}
+          {% if products.number == num %}
+            <li class="page-item active"><a class="page-link">{{ num }}</a></li>
+          {% else %}
+            <li class="page-item"><a class="page-link" href="?dashboard-page={{ num }}">{{ num }}</a></li>
+          {% endif %}
+        {% elif num == products.number|add:'-3' or num == products.number|add:'3' %}
+          <li class="page-item disabled"><span class="page-link">…</span></li>
+        {% endif %}
+      {% endfor %}
+    
+      {% if products.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="?dashboard-page={{ products.next_page_number }}">Keyingi</a>
+        </li>
+      {% endif %}
+    </ul>
+    
+  </nav>
+
+  <div class="savatga-otish-container">
+    <button class="savatga-otish-btn">
+      🛒 Savatga o'tish (2)
+    </button>
+  </div>
+  </div>

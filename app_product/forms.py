@@ -13,7 +13,7 @@ class ProductEditForm(forms.Form):
         queryset=CategoryModel.objects.all(),  # barcha kategoriyalar
         widget=forms.SelectMultiple(attrs={"class": "form-select", "multiple": "multiple"})
     )
-    
+
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)  # view dan user uzatiladi
         super().__init__(*args, **kwargs)

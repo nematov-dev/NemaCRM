@@ -14,13 +14,18 @@
         </div>
       </div>
       <!-- 🔍 Qidiruv formasi boshlandi -->
-
-      <form id="category-search-form" class="category-search-form" method="GET" action="{% url 'app_category:category-list' %}">
-        <div class="input-group">
-          <input id="search-input-category" type="text" class="form-control rounded-start-pill py-3 px-4 fs-9" name="category-search" placeholder="Mahsulot nomi bo‘yicha qidiring...">
-          <button class="btn btn-primary rounded-end-pill px-4 fs-5" type="submit">Qidirish</button>
+      <div class="container my-3">
+        <div class="row justify-content-center mb-0 ">
+          <div class="col-md-6">
+              <form id="category-search-form" class="category-search-form" method="GET" action="{% url 'app_category:category-list' %}">
+                <div class="input-group">
+                  <input id="search-input-category" type="text" class="form-control rounded-start-pill py-3 px-4 fs-9" name="category-search" placeholder="Kategoriya nomi bo‘yicha qidiring...">
+                  <button class="btn btn-primary rounded-end-pill px-4 fs-5" type="submit">Qidirish</button>
+                </div>
+              </form>
+          </div>
         </div>
-      </form>
+      </div>
 
       <script>
         const searchInput = document.getElementById('search-input-category');
@@ -40,13 +45,11 @@
         });
       </script>
       
-      
       <!-- 🔍 Qidiruv formasi tugadi -->
-
       
     </div>
     <!-- end row -->
-  </div><br>
+  </div>
 
   <!-- Table categories start -->
   <!-- ========== tables-wrapper start ========== -->

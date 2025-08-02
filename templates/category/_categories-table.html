@@ -30,17 +30,94 @@
                 <td>
                 <div class="action">
                     <button class="edit">
-                    <i class="lni lni-pencil"></i>
+                        <a href="{% url 'app_category:category-detail' cat.id %}"><i class="lni lni-pencil"></i> <p>tahrirlash</p></a>
                     </button>
                 </div>
                 </td>
                 <td>
-                <div class="action">
-                    <button class="text-danger">
-                    <i class="lni lni-trash-can"></i>
+                    <!-- O'chirish tugmasi -->
+                    <div class="action" style="position: relative; display: inline-block;">
+                    <button class="text-danger delete-btn">
+                        <i class="lni lni-trash-can"> <p>o'chirish</p> </i>
                     </button>
-                </div>
-                </td>
+    
+                    <!-- Hover orqali chiqadigan oynacha -->
+                    <div class="delete-confirm shadow">
+                        <p class="small mb-2" style="font-weight: bold;">Rostan ham o‘chirasizmi?</p>
+                        <div class="d-flex justify-content-end">
+                        <form action="{% url 'app_category:category-delete' cat.id %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-outline-dark me-2 btn-yes" style="background-color: rgb(79, 255, 79);">Ha</button>
+                        </form>
+                        <button class="btn btn-outline-dark btn-no" style="background-color: rgb(255, 75, 75);">Yo‘q</button>
+                        </div>
+                    </div>
+                    </div>
+    
+                    <style>
+                     .action {
+                        position: relative;
+                        }
+    
+                        .delete-confirm {
+                        position: absolute;
+                        bottom: 40px;
+                        right: 0;
+                        background-color: white;
+                        padding: 10px;
+                        border-radius: 8px;
+                        border: 1px solid #ddd;
+                        z-index: 9999;
+                        width: 220px;
+                        display: none;
+                        animation: fadeIn 0.2s ease-in-out;
+                        }
+    
+                        .action:hover .delete-confirm {
+                        display: block;
+                        }
+    
+                        @keyframes fadeIn {
+                        from {opacity: 0; transform: translateY(5px);}
+                        to {opacity: 1; transform: translateY(0);}
+                        }
+    
+                    </style>
+    
+                    <script>
+                        document.querySelectorAll('.delete-btn').forEach((btn) => {
+                        const wrapper = btn.closest('.action');
+                        const popup = wrapper.querySelector('.delete-confirm');
+                        const noBtn = popup.querySelector('.btn-no');
+                    
+                        btn.addEventListener('click', (e) => {
+                            e.stopPropagation(); // boshqa eventlar ishlamasligi uchun
+                            // Boshqa barcha popup-larni yopish
+                            document.querySelectorAll('.delete-confirm').forEach(el => {
+                            if (el !== popup) el.classList.add('d-none');
+                            });
+                            // Agar hozirgi ochiq bo‘lsa yopamiz, yopiq bo‘lsa ochamiz
+                            if (popup.classList.contains('d-none')) {
+                            popup.classList.remove('d-none');
+                            } else {
+                            popup.classList.add('d-none');
+                            }
+                        });
+                    
+                        noBtn.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            popup.classList.add('d-none');
+                        });
+                        });
+                    
+                        // Sahifada boshqa joyga bosilganda yopish
+                        document.addEventListener('click', function(e) {
+                        if (!e.target.closest('.action')) {
+                            document.querySelectorAll('.delete-confirm').forEach(el => el.classList.add('d-none'));
+                        }
+                        });
+                    </script> 
+                  </td>
             </tr>
             {% endfor %}
             {% else %}

@@ -41,6 +41,8 @@
                     <div class="employee-image">
                         <img style="max-width: 200px; height: 60px; object-fit: cover;" src="{{ product.image.url }}"/>
                     </div>
+                {% else %}
+                    <p>   -</p>
                 {% endif %}
               </td>
               <td class="min-width">
@@ -53,7 +55,7 @@
                 {% for cat in product.category.all %}
                   <span class="badge bg-primary">{{ cat.name }}</span>
                 {% empty %}
-                  <span class="text-muted">Kategoriya yo‘q</span>
+                  <span class="text-muted">-</span>
                 {% endfor %}
               </td>
               <td class="min-width">
@@ -85,35 +87,21 @@
               <td>
                 <!-- O'chirish tugmasi -->
                 <div class="action" style="position: relative; display: inline-block;">
-  <button class="text-danger delete-btn">
-    <i class="lni lni-trash-can"> <p>o'chirish</p> </i>
-  </button>
+                <button class="text-danger delete-btn">
+                    <i class="lni lni-trash-can"> <p>o'chirish</p> </i>
+                </button>
 
-  <!-- Hover orqali chiqadigan oynacha -->
-  <div class="delete-confirm shadow">
-    <p class="small mb-2" style="font-weight: bold;">Rostan ham o‘chirasizmi?</p>
-    <div class="d-flex justify-content-end">
-      <form action="{% url 'app_product:product-delete' product.id %}" method="post">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-outline-dark me-2 btn-yes" style="background-color: rgb(79, 255, 79);">Ha</button>
-      </form>
-      <button class="btn btn-outline-dark btn-no" style="background-color: rgb(255, 75, 75);">Yo‘q</button>
-    </div>
-  </div>
-</div>
-
-
-                  <!-- Popover - yuqorisida chiqadi -->
-                  <div class="delete-confirm shadow d-none">
-                    <p class="small mb-2" style="font-weight: bold;" >Rostan ham o‘chirasizmi?</p>
+                <!-- Hover orqali chiqadigan oynacha -->
+                <div class="delete-confirm shadow">
+                    <p class="small mb-2" style="font-weight: bold;">Rostan ham o‘chirasizmi?</p>
                     <div class="d-flex justify-content-end">
-                      <form action="{% url 'app_product:product-delete' product.id %}" method="post">
+                    <form action="{% url 'app_product:product-delete' product.id %}" method="post">
                         {% csrf_token %}
                         <button type="submit" class="btn btn-outline-dark me-2 btn-yes" style="background-color: rgb(79, 255, 79);">Ha</button>
-                      </form>
-                      <button class="btn btn-outline-dark btn-no" style="background-color: rgb(255, 75, 75);" >Yo‘q</button>
+                    </form>
+                    <button class="btn btn-outline-dark btn-no" style="background-color: rgb(255, 75, 75);">Yo‘q</button>
                     </div>
-                  </div>
+                </div>
                 </div>
 
                 <style>
@@ -178,7 +166,8 @@
                         document.querySelectorAll('.delete-confirm').forEach(el => el.classList.add('d-none'));
                     }
                     });
-                </script>
+                </script> 
+              </td>
   
             </tr>
           {% endfor %}

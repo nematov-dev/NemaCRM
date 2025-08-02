@@ -1,12 +1,13 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.views import View
 from django.contrib import messages
 from django.core.paginator import Paginator
 
 from app_category.models import CategoryModel
+from app_category.forms import CategoryEditForm
 
 
-class CategoryList(View):
+class CategoryListView(View):
     def get(self, request):
         user = request.user
         categories = user.categories.all()
@@ -27,10 +28,29 @@ class CategoryList(View):
 
 
 class CategoryDetail(View):
-    def get(self,request):
-        return render(request,'category/category-detail.html')
+    def get(self,request,pk):
+        category = get_object_or_404(CategoryModel,id=pk,user=request.user)
+
+        context = {
+            "category":category
+        }
+        return render(request,'category/category-detail.html',context)
     
-class CategoryAdd(View):
+    def post(self,request,pk):
+        category_form = CategoryEditForm(request.POST)
+        category = get_object_or_404(CategoryModel,id=pk,user=request.user)
+
+        if category_form.is_valid():
+            category_name = category_form.cleaned_data["name"]
+            category.name = category_name
+            category.save()
+            messages.success(request, "Kategoriya tahrirlandi!")
+            return redirect("app_category:category-detail", pk=category.id)
+        
+        category_form.add_error(None,"Formani to'ldiring!")
+        return render(request,"category/category-detail.html",{"category_form":category_form})
+    
+class CategoryAddView(View):
     def get(self, request):
         return render(request, 'category/categories-add.html')
 
@@ -55,4 +75,8 @@ class CategoryAdd(View):
 
         return redirect('app_category:category-add')  # O'zingizga mos yo'nalishga
 
-    
+class CategoryDeleteView(View):
+    def post(self,request,pk):
+        category = get_object_or_404(CategoryModel, user=request.user, id=pk)
+        category.delete()
+        return redirect('app_category:category-list')  # Sahifaga qaytish yo‘nalishi

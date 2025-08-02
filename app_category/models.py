@@ -14,5 +14,6 @@ class CategoryModel(models.Model):
         return self.name
     
     class Meta:
+        ordering = ["-created_at"]
         verbose_name = "Category"
         verbose_name_plural = "Categories"

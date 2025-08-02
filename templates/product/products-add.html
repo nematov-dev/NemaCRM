@@ -27,7 +27,7 @@
           <th>Narxi (so‘m)</th>
           <th>Birlik</th>
           <th>Miqdori</th>
-          <th>Kategoriya</th>
+          <th>Kategoriya ( ixtiyoriy )</th>
         </tr>
       </thead>
       <tbody id="mahsulot-jadvali">
@@ -44,7 +44,7 @@
           </td>
           <td><input type="number" name="miqdorlar[]" class="form-control form-control-sm" required></td>
           <td>
-            <select name="kategoriyalar[]" class="form-select form-select-sm" required>
+            <select name="kategoriyalar[]" class="form-select form-select-sm">
               <option value="">Tanlang</option>
               {% for category in categories %}
                 <option value="{{ category.id }}">{{ category.name }}</option>
@@ -80,7 +80,7 @@
           </td>
       <td><input type="number" name="miqdorlar[]" class="form-control form-control-sm" required></td>
       <td>
-            <select name="kategoriyalar[]" class="form-select form-select-sm" required>
+            <select name="kategoriyalar[]" class="form-select form-select-sm">
               <option value="">Tanlang</option>
               {% for category in categories %}
                 <option value="{{ category.id }}">{{ category.name }}</option>

@@ -116,11 +116,17 @@ class ProductAdd(View):
         mahsulotlar_soni = len(nomlar)
         for i in range(mahsulotlar_soni):
             try:
-                kategoriya = CategoryModel.objects.get(id=int(kategoriyalar[i]), user=request.user)
+                kategoriya_id = kategoriyalar[i]
 
-                # Agar rasm kiritilgan bo‘lsa, olamiz, bo‘lmasa None
-                rasm = rasmlar[i] if i < len(rasmlar) else None
+                # Avval tekshiramiz — agar yo‘q yoki bo‘sh bo‘lsa, None
+                if not kategoriya_id or kategoriya_id == 'Tanlang':
+                    kategoriya = None
+                else:
+                    kategoriya = CategoryModel.objects.get(id=int(kategoriya_id), user=request.user)
                 
+                # Rasm bo‘lsa olamiz, bo‘lmasa None
+                rasm = rasmlar[i] if i < len(rasmlar) else None
+
                 product = ProductModel.objects.create(
                     user=request.user,
                     image=rasm,
@@ -129,8 +135,9 @@ class ProductAdd(View):
                     unity=birliklar[i],
                     count=miqdorlar[i],
                 )
-                
-                product.category.set([kategoriya])  # ManyToManyField uchun to‘g‘ri usul
+                if kategoriya:
+                    product.category.set([kategoriya])  # ManyToManyField uchun to‘g‘ri usul
+
                 success_count += 1
 
             except Exception as e:
