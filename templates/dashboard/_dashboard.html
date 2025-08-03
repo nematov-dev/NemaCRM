@@ -18,30 +18,48 @@
               </div>
             {% endif %}
           </div>
-
+          
           <!-- Ma'lumot qismi -->
           <div class="card-body p-2">
             <h6 class="text-bold mb-1" style="font-size: 14px;">{{ product.name }}</h6>
             <p class="card-title mb-2" style="font-size: 13px; font-weight: 500; ">{{ product.price }} so'm</p>
 
-            <!-- Miqdorni belgilash -->
-            <div class="d-flex justify-content-center align-items-center mb-2">
-              <button class="btn btn-sm" style="padding: 4px 14px; background-color: rgb(210, 95, 95); color: white;"
-                      onclick="decreaseQty(this)">−</button>
-              <input type="number" value="1" min="1"
-                     class="form-control mx-1 text-center bold"
-                     style="width: 66px; font-size: 12px; font-weight: bold; ">
-              <button class="btn btn-sm" style="padding: 4px 14px; background-color: rgb(83, 176, 83); color: white;"
-                      onclick="increaseQty(this)">+</button>
-            </div>
-
-            <!-- Savatchaga qo‘shish -->
-            <button class="btn btn-primary savatga-btn  mt-3"
-        style="font-size: 15px; padding: 6px 16px; border-radius: 8px; min-width: 120px;">
-        ➕ Savatga
-            </button>
-
+            <form action="{% url 'app_dashboard:cart-add' product.id %}" method="post">
+              {% csrf_token %}
             
+              <!-- Miqdorni belgilash -->
+              <div class="d-flex justify-content-center align-items-center mb-2">
+                <button class="btn btn-sm" type="button"
+                        style="padding: 4px 14px; background-color: rgb(210, 95, 95); color: white;"
+                        onclick="decreaseQty(this)">−</button>
+                
+                <input name="count" type="number" value="1" min="1"
+                       class="form-control mx-1 text-center bold"
+                       style="width: 66px; font-size: 12px; font-weight: bold; ">
+                
+                <button class="btn btn-sm" type="button"
+                        style="padding: 4px 14px; background-color: rgb(83, 176, 83); color: white;"
+                        onclick="increaseQty(this)">+</button>
+              </div>
+              <input type="hidden" name="next" value="{{ request.get_full_path }}">
+              <!-- Savatchaga qo‘shish -->
+              <button class="btn btn-primary savatga-btn mt-3"
+                      style="font-size: 15px; padding: 6px 16px; border-radius: 8px; min-width: 120px;">
+                ➕ Savatga
+              </button>
+            </form>
+            <script>function increaseQty(button) {
+              const input = button.parentElement.querySelector('input[name="count"]');
+              input.value = parseInt(input.value || 1) + 1;
+            }
+            
+            function decreaseQty(button) {
+              const input = button.parentElement.querySelector('input[name="count"]');
+              if (parseInt(input.value) > 1) {
+                input.value = parseInt(input.value) - 1;
+              }
+            }
+            </script>
           </div>
         </div>
       </div>
@@ -82,7 +100,7 @@
   <!-- Savatga o'tish tugmasi -->
   <div class="savatga-otish-container mt-4 text-center">
     <button class="btn btn-success savatga-otish-btn px-4 py-2">
-      🛒 Savatga o'tish (2)
+      <a style="color: white;" href="{% url 'app_dashboard:cart-list' %}">🛒 Savatga o'tish (2)</a>
     </button>
   </div>
 </div>

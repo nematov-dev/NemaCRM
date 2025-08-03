@@ -6,10 +6,20 @@
 {% block content %}
 {% if messages %}
   {% for message in messages %}
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <div class="alert alert-success alert-dismissible fade show custom-alert" role="alert">
       {{ message }}
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
+    <style>
+      .custom-alert {
+        font-size: 13px;
+        padding: 15px 60px;
+        margin: 13px auto;
+        width: fit-content;
+        max-width: 300px;
+      }
+    </style>
+        
   {% endfor %}
 {% endif %}
 

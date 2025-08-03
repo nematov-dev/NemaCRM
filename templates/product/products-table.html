@@ -4,7 +4,16 @@
 {% block title %}Product List {% endblock title %}
 
 {% block content %}
-<div class="container-fluid">
+<div class="container-fluid"><br>
+  {% if messages %}
+  {% for message in messages %}
+    <div class="alert alert-success alert-dismissible fade show custom-alert" role="alert">
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+        
+  {% endfor %}
+{% endif %}
   <!-- ========== title-wrapper start ========== -->
   <div class="title-wrapper pt-30">
     <div class="row align-items-center">

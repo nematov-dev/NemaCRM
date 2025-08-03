@@ -3,9 +3,6 @@
       <thead>
         <tr>
           <th>
-            <h6>#</h6>
-          </th>
-          <th>
             <h6>Rasmi</h6>
           </th>
           <th>
@@ -33,9 +30,6 @@
         {% if products %}
           {% for product in products %}
             <tr>
-              <td class="min-width">
-                <p>{{ product.id }}</p>
-              </td>
               <td>
                 {% if product.image%} 
                     <div class="employee-image">
@@ -46,7 +40,7 @@
                 {% endif %}
               </td>
               <td class="min-width">
-                <p><a href="{% url 'app_product:product-detail' product.id %}">{{ product.name }}</a></p>
+                <p class="fw-semibold" ><a href="{% url 'app_product:product-detail' product.id %}">{{ product.name }}</a></p>
               </td>
               <td class="min-width">
                 <p><a href="{% url 'app_product:product-detail' product.id %}">{{ product.price }} so'm</a></p>

@@ -145,7 +145,7 @@ class ProductAdd(View):
 
 
         if success_count > 0:
-            messages.success(request, f"{success_count} ta mahsulot muvaffaqiyatli qo‘shildi!")
+            messages.success(request, f"{success_count} ta mahsulot qo‘shildi!")
 
         return redirect('app_product:product-add')  # O'zingizga mos yo'nalishga
 
@@ -153,4 +153,5 @@ class ProductDeleteView(View):
     def post(self, request, pk):
         product = get_object_or_404(ProductModel, user=request.user, id=pk)
         product.delete()
+        messages.success(request,"Mahsulot o'chirildi")
         return redirect('app_product:product-list')  # Sahifaga qaytish yo‘nalishi

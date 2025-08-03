@@ -6032,3 +6032,11 @@ h6,
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
   }
+
+  .custom-alert {
+    font-size: 13px;
+    padding: 15px 60px;
+    margin: 13px auto;
+    width: fit-content;
+    max-width: 300px;
+  }

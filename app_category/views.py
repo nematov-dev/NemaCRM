@@ -79,4 +79,5 @@ class CategoryDeleteView(View):
     def post(self,request,pk):
         category = get_object_or_404(CategoryModel, user=request.user, id=pk)
         category.delete()
+        messages.success(request,"Kategoriya o'chirildi")
         return redirect('app_category:category-list')  # Sahifaga qaytish yo‘nalishi

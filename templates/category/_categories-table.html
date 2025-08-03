@@ -3,9 +3,6 @@
       <thead>
         <tr>
           <th>
-            <h6>#</h6>
-          </th>
-          <th>
             <h6>Nomi</h6>
           </th>
           <th>
@@ -22,10 +19,7 @@
             {% for cat in categories %}
             <tr>
                 <td class="min-width">
-                <p>{{ cat.id }}</p>
-                </td>
-                <td class="min-width">
-                <p>{{ cat.name }}</p>
+                <p class="fw-semibold" ><a href="{% url 'app_category:category-detail' cat.id %}">{{ cat.name }}</a></p>
                 </td>
                 <td>
                 <div class="action">
