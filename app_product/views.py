@@ -36,7 +36,7 @@ class ProductListView(LoginRequiredMixin,View):
         
         categories = CategoryModel.objects.filter(user=user)
 
-        paginator = Paginator(products, 15)
+        paginator = Paginator(products, 10)
         page_number = request.GET.get('product-page')
         page_obj = paginator.get_page(page_number)
 

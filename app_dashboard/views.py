@@ -33,6 +33,6 @@ class Dashboard(LoginRequiredMixin,View):
 
         return render(request, 'dashboard/dashboard.html', context)
 
-class Cart(View):
+class CartView(View):
     def get(self,request):
         return render(request,'dashboard/cart.html')

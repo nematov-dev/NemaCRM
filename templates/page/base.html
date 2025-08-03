@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="{% static 'assets/images/favicon.svg' %}" type="image/x-icon" />
+    <link rel="shortcut icon" href="{% static 'assets/images/logo/crm.png' %}" type="image/x-icon" />
     <title>{% block title %}{% endblock title %}</title>
 
     <!-- ========== All CSS files linkup ========= -->
@@ -28,10 +28,11 @@
     <aside class="sidebar-nav-wrapper">
       <div class="navbar-logo">
         <a href="{% url 'app_dashboard:dashboard' %}">
-          <img src="{% static 'assets/images/logo/logo.svg' %}" alt="logo" />
+          <img src="{% static 'assets/images/logo/nemacrm.png' %}" alt="logo" width="150px" />
         </a>
       </div>
       <nav class="sidebar-nav">
+        <hr>
         <ul>
           <li class="nav-item">
             <a href="{% url 'app_dashboard:dashboard' %}">
@@ -43,17 +44,25 @@
                     d="M17.0833 10C17.7737 10 18.3432 9.43708 18.2408 8.75433C17.7005 5.14918 14.8508 2.29947 11.2457 1.75912C10.5629 1.6568 10 2.2263 10 2.91665V9.16666C10 9.62691 10.3731 10 10.8333 10H17.0833Z" />
                 </svg>
               </span>
-              <span class="text">Asosiy sahifa</span>
+              <span class="text" 
+              {% url "app_dashboard:dashboard" as dashboard_url %}
+              {% if request.path == dashboard_url %} 
+                style="color: rgb(75, 75, 255); font-weight: bold;"
+              {% endif %} >Asosiy sahifa</span>
             </a>
           </li>
           <li class="nav-item">
-            <a href="{% url 'app_dashboard:cart' %}">
+            <a href="{% url 'app_dashboard:cart-list' %}">
               <span class="icon">
                 <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512" fill="currentColor">
                   <path d="M0 32C0 14.33 14.33 0 32 0H64c14.2 0 26.6 9.4 30.7 22.9L112.9 64H544c19.8 0 34.7 18.3 30.7 37.7l-48 240C522.1 367.8 500.3 384 476.2 384H192.9l-5.2 26.1c-3.3 16.4-17.7 27.9-34.5 27.9H80c-17.7 0-32-14.3-32-32s14.3-32 32-32h48.9l10.3-52.1-45.6-215.3L48 64H32C14.33 64 0 49.67 0 32zM160 464a48 48 0 1 0 0-96 48 48 0 1 0 0 96zm320 0a48 48 0 1 0 0-96 48 48 0 1 0 0 96z"/>
                 </svg>
               </span>
-              <span class="text"> Savatcha</span>
+              <span class="text"
+              {% url "app_dashboard:cart-list" as cart_url %}
+              {% if request.path == cart_url %} 
+                style="color: rgb(75, 75, 255); font-weight: bold;"
+              {% endif %} > Savatcha</span>
             </a>
           </li>
           
@@ -65,7 +74,11 @@
                   <path d="M104 112C90.7 112 80 122.7 80 136V184C80 197.3 90.7 208 104 208H152C165.3 208 176 197.3 176 184V136C176 122.7 165.3 112 152 112H104zM256 128C238.3 128 224 142.3 224 160S238.3 192 256 192H544C561.7 192 576 177.7 576 160S561.7 128 544 128H256zM256 288C238.3 288 224 302.3 224 320S238.3 352 256 352H544C561.7 352 576 337.7 576 320S561.7 288 544 288H256zM256 448C238.3 448 224 462.3 224 480S238.3 512 256 512H544C561.7 512 576 497.7 576 480S561.7 448 544 448H256zM80 296V344C80 357.3 90.7 368 104 368H152C165.3 368 176 357.3 176 344V296C176 282.7 165.3 272 152 272H104C90.7 272 80 282.7 80 296zM104 432C90.7 432 80 442.7 80 456V504C80 517.3 90.7 528 104 528H152C165.3 528 176 517.3 176 504V456C176 442.7 165.3 432 152 432H104z"/>
                 </svg>
               </span>
-              <span class="text">Mahsulotlar ro'yxati</span>
+              <span class="text"
+              {% url "app_product:product-list" as products_url %}
+              {% if request.path == products_url %} 
+                style="color: rgb(75, 75, 255); font-weight: bold;"
+              {% endif %} >Mahsulotlar ro'yxati</span>
             </a>
           </li>
           <li class="nav-item">
@@ -75,7 +88,11 @@
                   <path d="M104 112C90.7 112 80 122.7 80 136V184C80 197.3 90.7 208 104 208H152C165.3 208 176 197.3 176 184V136C176 122.7 165.3 112 152 112H104zM256 128C238.3 128 224 142.3 224 160S238.3 192 256 192H544C561.7 192 576 177.7 576 160S561.7 128 544 128H256zM256 288C238.3 288 224 302.3 224 320S238.3 352 256 352H544C561.7 352 576 337.7 576 320S561.7 288 544 288H256zM256 448C238.3 448 224 462.3 224 480S238.3 512 256 512H544C561.7 512 576 497.7 576 480S561.7 448 544 448H256zM80 296V344C80 357.3 90.7 368 104 368H152C165.3 368 176 357.3 176 344V296C176 282.7 165.3 272 152 272H104C90.7 272 80 282.7 80 296zM104 432C90.7 432 80 442.7 80 456V504C80 517.3 90.7 528 104 528H152C165.3 528 176 517.3 176 504V456C176 442.7 165.3 432 152 432H104z"/>
                 </svg>
               </span>
-              <span class="text">Kategoriyalar ro'yxati</span>
+              <span class="text"
+              {% url "app_category:category-list" as categories_url %}
+              {% if request.path == categories_url %} 
+                style="color: rgb(75, 75, 255); font-weight: bold;"
+              {% endif %} >Kategoriyalar ro'yxati</span>
             </a>
           </li>
           
@@ -87,7 +104,11 @@
                   <path d="M352 128C352 110.3 337.7 96 320 96C302.3 96 288 110.3 288 128V288H128C110.3 288 96 302.3 96 320C96 337.7 110.3 352 128 352H288V512C288 529.7 302.3 544 320 544C337.7 544 352 529.7 352 512V352H512C529.7 352 544 337.7 544 320C544 302.3 529.7 288 512 288H352V128Z" />
                 </svg>
               </span>
-              <span class="text">Mahsulot qo'shish</span>
+              <span class="text"
+              {% url "app_product:product-add" as product_add_url %}
+              {% if request.path == product_add_url %} 
+                style="color: rgb(75, 75, 255); font-weight: bold;"
+              {% endif %} >Mahsulot qo'shish</span>
             </a>
           </li>
           
@@ -98,7 +119,11 @@
                   <path d="M352 128C352 110.3 337.7 96 320 96C302.3 96 288 110.3 288 128V288H128C110.3 288 96 302.3 96 320C96 337.7 110.3 352 128 352H288V512C288 529.7 302.3 544 320 544C337.7 544 352 529.7 352 512V352H512C529.7 352 544 337.7 544 320C544 302.3 529.7 288 512 288H352V128Z" />
                 </svg>
               </span>
-              <span class="text">Kategoriya qo'shish</span>
+              <span class="text"
+              {% url "app_category:category-add" as category_add_url %}
+              {% if request.path == category_add_url %} 
+                style="color: rgb(75, 75, 255); font-weight: bold;"
+              {% endif %} >Kategoriya qo'shish</span>
             </a>
           </li>
           
@@ -110,7 +135,10 @@
                   <path d="M256 144C256 117.5 277.5 96 304 96H336C362.5 96 384 117.5 384 144V496C384 522.5 362.5 544 336 544H304C277.5 544 256 522.5 256 496V144zM64 336C64 309.5 85.5 288 112 288H144C170.5 288 192 309.5 192 336V496C192 522.5 170.5 544 144 544H112C85.5 544 64 522.5 64 496V336zM496 160H528C554.5 160 576 181.5 576 208V496C576 522.5 554.5 544 528 544H496C469.5 544 448 522.5 448 496V208C448 181.5 469.5 160 496 160z"/>
                 </svg>
               </span>
-              <span class="text">Hisobot</span>
+              <span class="text" {% url "app_stat:stat" as stat_url %}
+              {% if request.path == stat_url %} 
+                style="color: rgb(75, 75, 255); font-weight: bold;"
+              {% endif %} >Hisobot</span>
             </a>
           </li>
           
@@ -129,7 +157,11 @@
                     d="M7.48901 17.1925C8.10004 17.8918 8.99841 18.3335 10 18.3335C11.0016 18.3335 11.9 17.8918 12.511 17.1925C10.8482 17.4634 9.15183 17.4634 7.48901 17.1925Z" />
                 </svg>
               </span>
-              <span class="text">Xabarnomalar</span>
+              <span class="text"
+              {% url "app_page:notification" as notification_url %}
+              {% if request.path == notification_url %} 
+                style="color: rgb(75, 75, 255); font-weight: bold;"
+              {% endif %} >Xabarnomalar</span>
             </a>
           </li>
         </ul>

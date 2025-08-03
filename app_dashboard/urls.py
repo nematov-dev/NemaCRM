@@ -6,5 +6,5 @@ app_name = 'app_dashboard'
 
 urlpatterns = [
     path('',views.Dashboard.as_view(),name='dashboard'),
-    path('cart/',views.Cart.as_view(),name='cart')
+    path('cart/',views.CartView.as_view(),name='cart-list')
 ]
