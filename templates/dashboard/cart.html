@@ -89,7 +89,7 @@
           <div class="container d-flex justify-content-center gap-3">
             
             <!-- ✅ Tasdiqlash tugmasi - button orqali ishlaydi -->
-            <form action="" method="post" style="width: 50%;">
+            <form action="{% url 'app_order:order-confirm' %}" method="post" style="width: 50%;">
               {% csrf_token %}
               <button class="btn btn-success fw-bold w-100">Tasdiqlash</button>
             </form>

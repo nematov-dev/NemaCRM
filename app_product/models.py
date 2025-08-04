@@ -12,8 +12,8 @@ class Unit(models.TextChoices):
 class ProductModel(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE,related_name="products")
     image = models.ImageField(upload_to="products/",null=True,blank=True)
-    name = models.CharField(max_length=255)
-    price = models.DecimalField(max_digits=30, decimal_places=2)
+    name = models.CharField(max_length=255,unique=True)
+    price = models.DecimalField(max_digits=15,decimal_places=2)
     count = models.BigIntegerField()
     category = models.ManyToManyField(CategoryModel,related_name="products")
     unity = models.CharField(

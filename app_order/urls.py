@@ -1,3 +1,9 @@
 from django.urls import path
 
-# app_name = 'app_order'
+from app_order import views
+
+app_name = 'app_order'
+
+urlpatterns = [
+    path('order-confirm/',views.ConfirmOrder.as_view(),name="order-confirm")
+]

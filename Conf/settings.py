@@ -34,7 +34,7 @@ INSTALLED_APPS = [
     'app_page',
     'app_product',
     'app_stat',
-    # 'app_order'
+    'app_order'
 ]
 
 MIDDLEWARE = [
