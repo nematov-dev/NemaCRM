@@ -25,9 +25,12 @@ class Dashboard(LoginRequiredMixin,View):
         page_number = request.GET.get('dashboard-page')
         page_obj = paginator.get_page(page_number)
 
+        cart = request.session.get("cart", {})
+        total_quantity = len(cart) 
         context = {
             'products': page_obj,
-            'categories':categories
+            'categories':categories,
+            'total_quantity':total_quantity
         }
 
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':

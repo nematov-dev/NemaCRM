@@ -22,8 +22,7 @@
           <!-- Ma'lumot qismi -->
           <div class="card-body p-2">
             <h6 class="text-bold mb-1" style="font-size: 14px;">{{ product.name }}</h6>
-            <p class="card-title mb-2" style="font-size: 13px; font-weight: 500; ">{{ product.price }} so'm</p>
-
+            <span style="color: rgb(21, 19, 19); margin-bottom: 9px; font-size: 13px; font-weight: 700px;" class="product-price" data-price="{{ product.price }}">{{ product.price }}&nbsp;so'm</span>
             <form action="{% url 'app_dashboard:cart-add' product.id %}" method="post">
               {% csrf_token %}
             
@@ -48,18 +47,33 @@
                 ➕ Savatga
               </button>
             </form>
-            <script>function increaseQty(button) {
-              const input = button.parentElement.querySelector('input[name="count"]');
-              input.value = parseInt(input.value || 1) + 1;
-            }
-            
-            function decreaseQty(button) {
-              const input = button.parentElement.querySelector('input[name="count"]');
-              if (parseInt(input.value) > 1) {
-                input.value = parseInt(input.value) - 1;
+            <script>
+              function increaseQty(btn) {
+                const input = btn.parentElement.querySelector('input[name="count"]');
+                input.value = parseInt(input.value) + 1;
+                updatePrice(btn);
               }
-            }
+            
+              function decreaseQty(btn) {
+                const input = btn.parentElement.querySelector('input[name="count"]');
+                if (parseInt(input.value) > 1) {
+                  input.value = parseInt(input.value) - 1;
+                  updatePrice(btn);
+                }
+              }
+            
+              function updatePrice(btn) {
+                const card = btn.closest('.card-body');
+                const input = card.querySelector('input[name="count"]');
+                const priceEl = card.querySelector('.product-price');
+                const pricePerItem = parseInt(priceEl.dataset.price);
+                const quantity = parseInt(input.value);
+                const totalPrice = pricePerItem * quantity;
+            
+                priceEl.textContent = totalPrice.toLocaleString() + " so'm";
+              }
             </script>
+            
           </div>
         </div>
       </div>
@@ -100,7 +114,7 @@
   <!-- Savatga o'tish tugmasi -->
   <div class="savatga-otish-container mt-4 text-center">
     <button class="btn btn-success savatga-otish-btn px-4 py-2">
-      <a style="color: white;" href="{% url 'app_dashboard:cart-list' %}">🛒 Savatga o'tish (2)</a>
+      <a style="color: white;" href="{% url 'app_dashboard:cart-list' %}">🛒 Savatga o'tish ({{ total_quantity }})</a>
     </button>
   </div>
 </div>
