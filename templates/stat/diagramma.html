@@ -1,0 +1,83 @@
+{% extends 'page/base.html' %}
+{% load static %}
+{% load humanize %}
+{% block stat_css %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock stat_css %}
+
+{% block title %}Stat diagramma
+{% endblock title %}
+
+{% block content %}
+  <!-- Grafik -->
+  <div class="card shadow-sm border-0 mb-5">
+    <div class="card-body">
+      <h5 class="card-title mb-3">🗓 Oxirgi 30 kunlik sotuvlar</h5>
+      <canvas id="salesChart" height="100"></canvas>
+    </div>
+  </div>
+
+<!-- Oxirgi 12 oylik savdolar -->
+<div class="card shadow-sm border-0 mb-5">
+    <div class="card-body">
+      <h5 class="card-title mb-3">📈 Oxirgi 12 oylik savdo statistikasi</h5>
+      <canvas id="yearlySalesChart" height="100"></canvas>
+    </div>
+  </div>
+  <!-- Chart.js config -->
+<script>
+    const ctx = document.getElementById('salesChart').getContext('2d');
+    const salesChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['1-kun', '2-kun', '3-kun', '4-kun', '5-kun', '6-kun', '7-kun','8-kun','9-kun','10-kun','11-kun','12-kun','13-kun','14-kun','15-kun','16-kun','17-kun','18-kun','19-kun','20-kun','21-kun','22-kun','23-kun','24-kun','25-kun','26-kun','27-kun','28-kun','29-kun','30-kun'],
+        datasets: [{
+          label: 'Sotuv (so‘m)',
+          data: [700000, 820000, 650000, 90000, 720000, 880000, 550000,100000,150000,500000,100000,22222,432123,1234321,345432,87654,876543,76543,765432,876543,876543,987543,345678,87654,345678,6543,456789,543333,34567,876544],
+          backgroundColor: '#0d6efd',
+          barThickness: 15
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: false },
+          tooltip: { mode: 'index', intersect: false }
+        },
+        scales: {
+          y: { beginAtZero: true }
+        }
+      }
+    });
+    
+    const yearlyCtx = document.getElementById('yearlySalesChart').getContext('2d');
+    const yearlySalesChart = new Chart(yearlyCtx, {
+      type: 'bar',
+      data: {
+        labels: ['Avgust', 'Sentabr', 'Oktabr', 'Noyabr', 'Dekabr', 'Yanvar', 'Fevral', 'Mart', 'Aprel', 'May', 'Iyun', 'Iyul'],
+        datasets: [{
+          label: 'Sotuv (so‘m)',
+          data: [4200000, 5000000, 4650000, 5500000, 4700000, 3900000, 4100000, 4300000, 4900000, 5100000, 4750000, 4950000],
+          backgroundColor: '#198754'
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: false },
+          tooltip: { mode: 'index', intersect: false }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              callback: value => value.toLocaleString() + " so‘m"
+            }
+          }
+        }
+      }
+    });
+    
+    
+    </script>
+{% endblock content %}

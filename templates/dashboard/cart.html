@@ -9,7 +9,7 @@
   <div class="card shadow rounded-4 p-4" style="min-height: 100vh; background-color: #fefefe;">
      <!-- 💰 Jami ko‘rsatish -->
      <div class="text-center mb-4 p-0 fw-bold">
-      <h4 class="fw-bold" style="background-color: yellowgreen; " >
+      <h4 class="fw-bold" style="background-color: greenyellow; " >
         💰 Jami: {{ total_price }} so'm
       </h4>
     </div>
@@ -38,7 +38,11 @@
                   <span class="fw-semibold">{{ item.product.name }}</span><hr>
                 </div>
               </td>
-              <td class="text-center border-bottom">{{ item.quantity }} ta</td>
+              <td class="text-center border-bottom">{{ item.quantity }} {% if item.product.unity == "dona" %}
+                ta
+              {% elif item.product.unity == "kg" %}
+                kg
+              {% endif %}</td>
               <td class="text-center border-bottom">{{ item.total_price }} so'm</td>
               <td class="text-center border-bottom">
                 <form method="post" action="{% url 'app_dashboard:cart-cancel' item.product.id %}">

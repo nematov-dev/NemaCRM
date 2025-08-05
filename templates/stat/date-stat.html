@@ -1,0 +1,93 @@
+{% extends 'page/base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block stat_css %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock stat_css %}
+
+{% block title %}Date Stat
+{% endblock title %}
+
+{% block context %}
+<div class="container my-5">
+    <h2 class="text-center mb-4">📅 Sana bo'yicha savdo statistikasi</h2>
+  
+    <!-- Faqat bitta form: POST orqali ishlaydi -->
+    <form method="post" class="row justify-content-center g-3 mb-4">
+      {% csrf_token %}
+      <div class="col-md-4">
+        <input type="date" class="form-control form-control-lg" name="date" required
+               value="{% if today_orders.last %}
+               {{ today_orders.last.created_at|date:'Y-m-d' }}
+           {% else %}
+               {{ today_date|date:'Y-m-d' }}
+           {% endif %}">
+      </div>
+      <div class="col-md-2">
+        <button type="submit" class="btn btn-lg btn-dark w-100">Ko‘rish</button>
+      </div>
+    </form>
+  
+    {% if selected_date %}
+      <!-- TANLANGAN SANA NATIJASI -->
+      <div class="card shadow-lg p-4 rounded-4">
+        <h5 class="mb-3">📌 {{ selected_date|date:"Y-m-d" }} uchun savdolar:</h5>
+        {% if orders %}
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item d-flex justify-content-between fw-bold" style="background-color: greenyellow;">
+              <span>Jami tushum:</span>
+              <span>{{ total_price|intcomma }} so'm</span>
+            </li>
+            {% for order in orders %}
+              <li class="list-group-item d-flex justify-content-between">
+                <span>
+                  {{ order.product.name }} -
+                  <span style="color: red;">
+                    {{ order.count }}
+                    {% if order.product.unity == "dona" %} ta
+                    {% elif order.product.unity == "kg" %} kg
+                    {% endif %}
+                  </span>
+                </span>
+                <span style="color: green;">{{ order.price|intcomma }} so'm</span>
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <div class="alert alert-warning mt-2">
+            {{ orders }}
+          </div>
+        {% endif %}
+      </div>
+  
+    {% else %}
+      <!-- BUGUN UCHUN NATIJA -->
+      <div class="card shadow-lg p-4 rounded-4">
+        <h5 class="mb-3">📌 {{ today_orders.last.created_at|default:today_date|date:"Y-m-d" }} uchun savdolar:</h5>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item d-flex justify-content-between fw-bold" style="background-color: greenyellow;">
+            <span>Jami tushum:</span>
+            <span>{{ total_price_today|intcomma }} so'm</span>
+          </li>
+          {% for t_order in today_orders %}
+            <li class="list-group-item d-flex justify-content-between">
+              <span>
+                {{ t_order.product.name }} -
+                <span style="color: red;">
+                  {{ t_order.count }}
+                  {% if t_order.product.unity == "dona" %} ta
+                  {% elif t_order.product.unity == "kg" %} kg
+                  {% endif %}
+                </span>
+              </span>
+              <span style="color: green;">{{ t_order.price|intcomma }} so'm</span>
+            </li>
+          {% empty %}
+            <li class="list-group-item">Bugun hech qanday buyurtma mavjud emas.</li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+  </div>
+{% endblock content %}
