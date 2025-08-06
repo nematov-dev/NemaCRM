@@ -1,5 +1,6 @@
 {% extends 'page/base.html' %}
 {% load static %}
+{% load humanize %}
 
 {% block title %}Cart{% endblock title %}
 
@@ -10,7 +11,7 @@
      <!-- 💰 Jami ko‘rsatish -->
      <div class="text-center mb-4 p-0 fw-bold">
       <h4 class="fw-bold" style="background-color: greenyellow; " >
-        💰 Jami: {{ total_price }} so'm
+        💰 Jami: {{ total_price|intcomma }} so'm
       </h4>
     </div>
     <!-- Jadval -->
@@ -43,7 +44,7 @@
               {% elif item.product.unity == "kg" %}
                 kg
               {% endif %}</td>
-              <td class="text-center border-bottom">{{ item.total_price }} so'm</td>
+              <td class="text-center border-bottom">{{ item.total_price|intcomma }} so'm</td>
               <td class="text-center border-bottom">
                 <form method="post" action="{% url 'app_dashboard:cart-cancel' item.product.id %}">
                   {% csrf_token %}
@@ -89,19 +90,19 @@
   </nav>
 
         <!-- Pastki tugmalar -->
-        <div class="fixed-bottom bg-white py-3 border-top shadow" style="z-index: 1000;">
+        <div class="fixed-bottom bg-white py-2 border-top shadow" style="z-index: 500;">
           <div class="container d-flex justify-content-center gap-3">
             
             <!-- ✅ Tasdiqlash tugmasi - button orqali ishlaydi -->
-            <form action="{% url 'app_order:order-confirm' %}" method="post" style="width: 50%;">
+            <form action="{% url 'app_order:order-confirm' %}" method="post" style="width: 65%;">
               {% csrf_token %}
               <button class="btn btn-success fw-bold w-100">Tasdiqlash</button>
             </form>
             
             <!-- 🗑 Tozalash tugmasi - boshqa forma -->
-            <form action="{% url 'app_dashboard:cart-clear' %}" method="post" style="width: 50%;">
+            <form action="{% url 'app_dashboard:cart-clear' %}" method="post" style="width: 15%;">
               {% csrf_token %}
-              <button class="btn btn-danger fw-bold w-100">Tozalash</button>
+              <button class="btn btn-danger fw-bold w-100"><i class="bi bi-trash"></i></button>
             </form>
         
           </div>

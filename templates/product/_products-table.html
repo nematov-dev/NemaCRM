@@ -1,3 +1,4 @@
+{% load humanize %}
 <div class="table-wrapper table-responsive">
     <table class="table">
       <thead>
@@ -43,7 +44,7 @@
                 <p class="fw-semibold" ><a href="{% url 'app_product:product-detail' product.id %}">{{ product.name }}</a></p>
               </td>
               <td class="min-width">
-                <p><a href="{% url 'app_product:product-detail' product.id %}">{{ product.price }} so'm</a></p>
+                <p><a href="{% url 'app_product:product-detail' product.id %}">{{ product.price|intcomma }} so'm</a></p>
               </td>
               <td class="min-width">
                 {% for cat in product.category.all %}

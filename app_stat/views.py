@@ -3,6 +3,8 @@ from datetime import date,timedelta,datetime
 from django.shortcuts import render
 from django.views import View
 from django.db.models import Sum,Max,F
+from collections import defaultdict
+from django.core.paginator import Paginator
 
 from app_order.models import OrderModel
 from app_product.models import ProductModel
@@ -77,30 +79,106 @@ class StatView(View):
         }
         return render(request,"stat/stat.html",context)
     
-    # def post(self, request):
+
+class DateStatView(View):
+    def get(self, request):
+        context = {
+            "today_date": today_date,
+            "orders": None,
+            "error": None
+        }
+        return render(request, "stat/date-stat.html", context)
+
+    def post(self, request):
         date = request.POST.get("date")
         try:
-            # Matndan date turiga o‘tkazish
             date_obj = datetime.strptime(date, "%Y-%m-%d").date()
         except (ValueError, TypeError):
-            # Noto‘g‘ri formatdagi sana kiritilsa
-            context = {"orders": "❌ Noto‘g‘ri sana formati. Iltimos, YYYY-MM-DD formatda kiriting!"}
-            return render(request, "stat/stat.html", context)
+            context = {
+                "orders": None,
+                "error": "❌ Noto‘g‘ri sana formati. Iltimos, YYYY-MM-DD formatda kiriting!",
+                "today_date": today_date
+            }
+            return render(request, "stat/date-stat.html", context)
 
-        # Shu sanadagi foydalanuvchining buyurtmalari
         orders = OrderModel.objects.filter(created_at__date=date_obj, user=request.user)
+        # Mahsulot nomi bo‘yicha guruhlab, count va price ni yig‘amiz
+        grouped_orders = defaultdict(lambda: {'count': 0, 'price': 0, 'unity': '', 'product': None})
+
+        for order in orders:
+            product_name = order.product.name
+            grouped_orders[product_name]['count'] += order.count
+            grouped_orders[product_name]['price'] += order.price
+            grouped_orders[product_name]['unity'] = order.product.unity
+            grouped_orders[product_name]['product'] = order.product
 
         if orders.exists():
             total_price = orders.aggregate(total=Sum('price'))['total'] or 0
             context = {
-                "orders": orders,
+                "grouped_orders": dict(grouped_orders),
                 "total_price": total_price,
-                "selected_date": date_obj  # Agar templateda sana ko‘rsatmoqchi bo‘lsangiz
+                "selected_date": date_obj,
+                "today_date": today_date,
+                "error": None
             }
         else:
             context = {
-                "orders": "Bu sanada ma'lumotlar mavjud emas!",
-                "selected_date": date_obj
+                "orders": None,
+                "error": "Bu sanada ma'lumotlar mavjud emas!",
+                "selected_date": date_obj,
+                "today_date": today_date
             }
 
-        return render(request, "stat/stat.html", context)
+        return render(request, "stat/date-stat.html", context)
+    
+
+class StatDiagrammaView(View):
+    def get(self, request):
+
+        # 7 kunlik
+        sales_7 = []
+        labels_7 = []
+        for i in range(7):
+            day = today_date - timedelta(days=6 - i)
+            total = OrderModel.objects.filter(
+                created_at__date=day,
+                user=request.user
+            ).aggregate(sum=Sum('price'))['sum'] or 0
+            sales_7.append(int(total))
+            labels_7.append(day.strftime('%d-%b'))
+
+        # 30 kunlik
+        sales_30 = []
+        labels_30 = []
+        for i in range(30):
+            day = today_date - timedelta(days=29 - i)
+            total = OrderModel.objects.filter(
+                created_at__date=day,
+                user=request.user
+            ).aggregate(sum=Sum('price'))['sum'] or 0
+            sales_30.append(int(total))
+            labels_30.append(day.strftime('%d-%b'))
+
+        # 3 oylik (oylar bo‘yicha)
+        sales_3_months = []
+        labels_3_months = []
+        for i in range(3):
+            month_start = (today_date.replace(day=1) - timedelta(days=30*i)).replace(day=1)
+            month_end = (month_start + timedelta(days=31)).replace(day=1) - timedelta(days=1)
+            total = OrderModel.objects.filter(
+                created_at__date__range=(month_start, month_end),
+                user=request.user
+            ).aggregate(sum=Sum('price'))['sum'] or 0
+            sales_3_months.insert(0, int(total))  # eng eski chapda bo'lishi uchun
+            labels_3_months.insert(0, month_start.strftime('%B'))  # Oy nomi
+
+        context = {
+            'sales_7_days': sales_7,
+            'labels_7_days': labels_7,
+            'sales_30_days': sales_30,
+            'labels_30_days': labels_30,
+            'sales_3_months': sales_3_months,
+            'labels_3_months': labels_3_months,
+        }
+
+        return render(request, 'stat/diagramma.html', context)

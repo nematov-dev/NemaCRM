@@ -15,6 +15,11 @@
     <link rel="stylesheet" href="{% static 'assets/css/fullcalendar.css' %}" />
     <link rel="stylesheet" href="{% static 'assets/css/fullcalendar.css' %}" />
     <link rel="stylesheet" href="{% static 'assets/css/main.css' %}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+
     {% block stat_css %}{% endblock stat_css %}
   </head>
   <body>
@@ -128,20 +133,63 @@
           </li>
           
           <span class="divider"><hr /></span>
-          <li class="nav-item">
-            <a href="{% url 'app_stat:stat' %}">
+          {% url "app_stat:stat" as stat_url %}
+          {% url "app_stat:date-stat" as date_url %}
+          {% url "app_stat:diagramma-stat" as diagramma_url %}
+          {% with request.path as current_path %}
+          <li class="nav-item nav-item-has-children">
+            <a
+              href="#0"
+              class="{% if current_path == stat_url or current_path == date_url or current_path == diagramma_url  %} {% else %}collapsed{% endif %}"
+              data-bs-toggle="collapse"
+              data-bs-target="#ddmenu_55"
+              aria-controls="ddmenu_55"
+              aria-expanded="{% if current_path == stat_url or current_path == date_url or current_path == diagramma_url %}true{% else %}false{% endif %}"
+              aria-label="Toggle navigation"
+            >
               <span class="icon">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 640 512" fill="currentColor">
                   <path d="M256 144C256 117.5 277.5 96 304 96H336C362.5 96 384 117.5 384 144V496C384 522.5 362.5 544 336 544H304C277.5 544 256 522.5 256 496V144zM64 336C64 309.5 85.5 288 112 288H144C170.5 288 192 309.5 192 336V496C192 522.5 170.5 544 144 544H112C85.5 544 64 522.5 64 496V336zM496 160H528C554.5 160 576 181.5 576 208V496C576 522.5 554.5 544 528 544H496C469.5 544 448 522.5 448 496V208C448 181.5 469.5 160 496 160z"/>
                 </svg>
               </span>
-              <span class="text" {% url "app_stat:stat" as stat_url %}
-              {% if request.path == stat_url %} 
+              {% url "app_stat:stat" as stats_url %}
+              <span {% if request.path == stats_url or request.path == date_url or request.path == diagramma_url %} 
                 style="color: rgb(75, 75, 255); font-weight: bold;"
-              {% endif %} >Hisobot</span>
+              {% endif %} class="text">
+                Hisobot
+              </span>
             </a>
+          
+            <ul id="ddmenu_55" class="collapse dropdown-nav {% if current_path == stat_url or current_path == date_url or current_path == diagramma_url %}show{% endif %}">
+              <li>
+                <a href="{{ stat_url }}"
+                {% if current_path == stat_url %}
+                  style="color: rgb(75, 75, 255); font-weight: bold;"
+                {% endif %}><i class="fas fa-chart-line"></i> Statistika</a>
+              </li>
+              <li>
+                <a href="{{ date_url }}"
+                {% if current_path == date_url %}
+                  style="color: rgb(75, 75, 255); font-weight: bold;"
+                {% endif %}><i class="fa fa-calendar"></i> Sana bo‘yicha</a>
+              </li>
+              <li>
+                <a href="{{ diagramma_url }}"
+                {% if current_path == diagramma_url %}
+                  style="color: rgb(75, 75, 255); font-weight: bold;"
+                {% endif %}><i class="fa fa-bar-chart"></i> Diagramma </a>
+              </li>
+              <style>
+                .dropdown-nav {
+                  padding-bottom: 0 !important;
+                  margin-bottom: 0 !important;
+                }
+              </style>
+            </ul>
           </li>
           
+          {% endwith %}
+
           <span class="divider"><hr /></span>
           <li class="nav-item">
             <a href="{% url 'app_page:notification' %}">

@@ -1,3 +1,5 @@
+{% load humanize %}
+
 <div class="row">
   <!-- Mahsulot kartalari -->
   {% if products %}
@@ -71,6 +73,7 @@
                 const totalPrice = pricePerItem * quantity;
             
                 priceEl.textContent = totalPrice.toLocaleString() + " so'm";
+                
               }
             </script>
             

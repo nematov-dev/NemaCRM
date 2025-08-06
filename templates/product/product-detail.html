@@ -1,5 +1,6 @@
 {% extends 'page/base.html' %}
 {% load static %}
+{% load humanize %}
 
 {% block title %}Product Detail{% endblock title %}
 
@@ -65,6 +66,7 @@
         <div class="mb-3">
           <label for="category" class="form-label">Kategoriyasi</label>
           <select class="form-select" id="category" name="category" multiple>
+            <option value="">Kategoriya tanlang</option>
             {% for cat in categories %}
               <option value="{{ cat.id }}"
                 {% if cat in product.category.all %}
