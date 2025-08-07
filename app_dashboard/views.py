@@ -39,14 +39,32 @@ class Dashboard(LoginRequiredMixin,View):
         return render(request, 'dashboard/dashboard.html', context)
     
 class AddCartView(View):
-    def post(self,request,product_id):
+    def post(self, request, product_id):
         cart = request.session.get("cart", {})
-        count = request.POST.get('count')
-        cart[str(product_id)] = cart.get(str(product_id), 0) + int(count)
-        request.session["cart"] = cart
-        messages.success(request,"Mahsulot savatga qo'shildi")
-        next_url = request.POST.get('next')
+        count = int(request.POST.get('count', 1))
+        next_url = request.POST.get('next', '/')
+
+        try:
+            product = ProductModel.objects.get(id=product_id, user=request.user)
+        except ProductModel.DoesNotExist:
+            messages.error(request, "❌ Mahsulot topilmadi.")
+            return redirect(next_url)
+
+        current_quantity_in_cart = cart.get(str(product_id), 0)
+        total_requested = current_quantity_in_cart + count
+
+        if total_requested > product.count:
+            messages.error(
+                request,
+                f"❌ {product.name} mahsulotidan faqat {product.count} dona mavjud. Siz jami {total_requested} dona qo‘shmoqchisiz."
+            )
+        else:
+            cart[str(product_id)] = total_requested
+            request.session["cart"] = cart
+            messages.success(request, f"Mahsulotdan {count} ta savatga qo‘shildi.")
+
         return redirect(next_url)
+    
         
     
 class CartView(View):
@@ -58,7 +76,7 @@ class CartView(View):
         for product_id, quantity in cart.items():
             try:
                 product = ProductModel.objects.get(id=product_id,user=request.user)
-
+            
                 if product.image and hasattr(product.image, 'url'):
                     image_url = product.image.url
                 else:

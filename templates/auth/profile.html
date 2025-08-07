@@ -57,26 +57,26 @@
 
             <!-- Ism -->
             <div class="input-style-1 mb-3">
-              <label for="id_fullname">Ismingiz</label>
-              <input id="id_fullname" type="text" name="fullname" class="form-control" value="{{ request.user.first_name }}">
-              {% for error in profile_form.fullname.errors %}
+              <label for="id_first_name">Ism</label>
+              <input id="id_first_name" type="text" name="first_name" class="form-control" value="{{ request.user.first_name }}">
+              {% for error in profile_form.first_name.errors %}
+                <small class="text-danger">{{ error }}</small>
+              {% endfor %}
+            </div>
+            <!-- Ism -->
+            <div class="input-style-1 mb-3">
+              <label for="id_last_name">Familiya</label>
+              <input id="id_last_name" type="text" name="last_name" class="form-control" value="{{ request.user.last_name }}">
+              {% for error in profile_form.last_name.errors %}
                 <small class="text-danger">{{ error }}</small>
               {% endfor %}
             </div>
 
             <!-- Username -->
             <div class="input-style-1 mb-3">
-              <label for="id_username">Foydalanuvchi nomi</label>
+              <label for="id_username">Telefon raqam</label>
               <input id="id_username" type="text" name="username" class="form-control" value="{{ request.user.username }}">
               {% for error in profile_form.username.errors %}
-                <small class="text-danger">{{ error }}</small>
-              {% endfor %}
-            </div>
-            <!-- Telefon -->
-            <div class="input-style-1 mb-3">
-              <label for="id_phone">Telefon raqam</label>
-              <input id="id_phone" type="text" name="phone" class="form-control" value="{{ request.user.profile.phone }}">
-              {% for error in profile_form.phone.errors %}
                 <small class="text-danger">{{ error }}</small>
               {% endfor %}
             </div>

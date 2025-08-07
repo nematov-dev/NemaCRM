@@ -2,9 +2,8 @@ from datetime import date,timedelta,datetime
 
 from django.shortcuts import render
 from django.views import View
-from django.db.models import Sum,Max,F
+from django.db.models import Sum,F
 from collections import defaultdict
-from django.core.paginator import Paginator
 
 from app_order.models import OrderModel
 from app_product.models import ProductModel

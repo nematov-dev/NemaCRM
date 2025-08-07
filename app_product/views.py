@@ -76,6 +76,7 @@ class ProductDetail(LoginRequiredMixin,View):
             unity = product_edit_form.cleaned_data["unity"]
             count = product_edit_form.cleaned_data["count"]
             categories = product_edit_form.cleaned_data["category"]
+            print(count)
 
             product = get_object_or_404(request.user.products, id=pk)
 
@@ -87,7 +88,7 @@ class ProductDetail(LoginRequiredMixin,View):
                 product.price = price
             if unity:
                 product.unity = unity
-            if count:
+            if count is not None:
                 product.count = count
             if categories:
                 product.category.set(categories)
