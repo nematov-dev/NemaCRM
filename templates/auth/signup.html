@@ -3,6 +3,7 @@
 <html lang="uz">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Mobil moslashuv -->
   <link rel="shortcut icon" href="{% static 'assets/images/logo/crm.png' %}" type="image/x-icon" />
   <title>Ro'yxatdan o'tish</title>
   <link rel="stylesheet" href="{% static 'assets/css/main.css' %}" />
@@ -12,11 +13,11 @@
     body {
       background: linear-gradient(135deg, #e3f2fd, #ffffff);
       font-family: 'Segoe UI', sans-serif;
-      height: 100vh;
+      min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 15px; /* Telefon uchun joy */
+      padding: 15px; /* Kichik ekranlarda bo'sh joy */
     }
 
     .login-box {
@@ -75,6 +76,27 @@
       0% { transform: translateY(0); }
       100% { transform: translateY(-5px); }
     }
+
+    /* Mobil moslashuv */
+    @media (max-width: 576px) {
+      .login-box {
+        padding: 20px;
+      }
+      .login-icon {
+        font-size: 45px;
+      }
+      h3 {
+        font-size: 20px;
+      }
+      .form-control {
+        font-size: 14px;
+        padding: 10px;
+      }
+      .btn-primary {
+        font-size: 14px;
+        padding: 10px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -85,14 +107,13 @@
       <h3 class="mt-3 fw-bold">Ro'yxatdan o'tish</h3>
     </div>
     {% if messages %}
-{% for message in messages %}
-  <div class="alert alert-success alert-dismissible fade show custom-alert" role="alert">
-    {{ message }}
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-  </div>
-      
-{% endfor %}
-{% endif %}
+      {% for message in messages %}
+        <div class="alert alert-success alert-dismissible fade show custom-alert" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endfor %}
+    {% endif %}
 
     <form method="POST">
       {% csrf_token %}
@@ -120,22 +141,18 @@
         <label for="last_name" class="form-label">Familiya</label>
         <input type="text" name="last_name" id="last_name" class="form-control" placeholder="Familiyangizni kiriting" required>
       </div>
-
       <div class="mb-3">
         <label for="phone" class="form-label">Telefon raqam</label>
-        <input type="text" name="phone" id="phone" class="form-control" placeholder="Raqamingizni kiriting" value="{{ request.session.phone }}" readonly required>
+        <input type="text" name="phone" id="phone" class="form-control" value="{{ request.session.phone }}" readonly required>
       </div>
-
       <div class="mb-3">
         <label for="password1" class="form-label">Parol</label>
-        <input type="password" name="password1" id="password1" class="form-control" placeholder="Parolningizni kiriting" required>
+        <input type="password" name="password1" id="password1" class="form-control" placeholder="Parolingizni kiriting" required>
       </div>
-
       <div class="mb-3">
         <label for="password2" class="form-label">Tasdiq parol</label>
-        <input type="password" name="password2" id="password2" class="form-control" placeholder="Tasdiq parolningizni kiriting" required>
+        <input type="password" name="password2" id="password2" class="form-control" placeholder="Parolingizni tasdiqlang" required>
       </div>
-
       <button type="submit" class="btn btn-primary w-100">Ro'yxatdan o'tish</button>
     </form>
   </div>
