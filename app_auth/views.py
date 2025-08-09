@@ -219,7 +219,7 @@ class ForgetPasswordDone(View):
                 messages.success(request,"Parolingiz o'zgartirildi!")
                 request.session.pop('password_phone_verified', None)
                 request.session.pop('password_phone', None)
-                return redirect('app_auth:login')
+                
             except Exception as e:
                     form.add_error(None, f"❌ Xatolik: {str(e)}")
         else:

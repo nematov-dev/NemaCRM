@@ -47,7 +47,9 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    'app_auth.middleware.SubscriptionCheckMiddleware',
+    'app_auth.middleware.SubscriptionCheckMiddleware', # Obunani tekshirish
+    'app_order.middleware.OrderCleanupMiddleware', # 4 oydan o'tgan orderlarni o'chirish
+
 ]
 
 ROOT_URLCONF = 'Conf.urls'
@@ -129,3 +131,5 @@ MEDIA_ROOT = BASE_DIR / 'media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = '/auth/login/'
+
+
