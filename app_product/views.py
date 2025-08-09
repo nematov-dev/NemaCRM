@@ -100,7 +100,7 @@ class ProductDetail(LoginRequiredMixin,View):
         product_edit_form.add_error(None, "Formani to‘ldiring!")
         return render(request, 'product/product-detail.html', context)
 
-class ProductAdd(View):
+class ProductAdd(LoginRequiredMixin,View):
     def get(self, request):
         categories = CategoryModel.objects.filter(user=request.user)
         return render(request, 'product/products-add.html', {'categories': categories})
@@ -150,7 +150,7 @@ class ProductAdd(View):
 
         return redirect('app_product:product-add')  # O'zingizga mos yo'nalishga
 
-class ProductDeleteView(View):
+class ProductDeleteView(LoginRequiredMixin,View):
     def post(self, request, pk):
         product = get_object_or_404(ProductModel, user=request.user, id=pk)
         product.delete()

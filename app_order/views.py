@@ -1,10 +1,11 @@
 from django.shortcuts import redirect
 from django.views import View
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from app_product.models import ProductModel
 from app_order.models import OrderModel
 
-class ConfirmOrder(View):
+class ConfirmOrder(LoginRequiredMixin,View):
     def post(self, request):
         cart = request.session.get("cart", {})
         for product_id, quantity in cart.items():

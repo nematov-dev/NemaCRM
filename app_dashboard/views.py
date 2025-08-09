@@ -38,7 +38,7 @@ class Dashboard(LoginRequiredMixin,View):
 
         return render(request, 'dashboard/dashboard.html', context)
     
-class AddCartView(View):
+class AddCartView(LoginRequiredMixin,View):
     def post(self, request, product_id):
         cart = request.session.get("cart", {})
         count = int(request.POST.get('count', 1))
@@ -67,7 +67,7 @@ class AddCartView(View):
     
         
     
-class CartView(View):
+class CartView(LoginRequiredMixin,View):
     def get(self,request):
         cart = request.session.get("cart", {})
         cart_items = []
@@ -101,12 +101,12 @@ class CartView(View):
 
         return render(request, 'dashboard/cart.html',context)
     
-class CartClearView(View):
+class CartClearView(LoginRequiredMixin,View):
     def post(self,request):
         request.session.pop("cart",None)
         return redirect('app_dashboard:dashboard')
     
-class CartProductCancel(View):
+class CartProductCancel(LoginRequiredMixin,View):
     def post(self, request, pk):
         cart = request.session.get("cart", {})
         pk_str = str(pk)

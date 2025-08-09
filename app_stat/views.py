@@ -4,6 +4,8 @@ from django.shortcuts import render
 from django.views import View
 from django.db.models import Sum,F
 from collections import defaultdict
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 from app_order.models import OrderModel
 from app_product.models import ProductModel
@@ -14,7 +16,7 @@ month_ago = today_date - timedelta(days=30)
 month_ago_3 = today_date - timedelta(days=90)
 
 
-class StatView(View):
+class StatView(LoginRequiredMixin,View):
     def get(self,request):
         # Foydalanuvchining bugungi buyurtmalari jami summasi
         total_price_today = OrderModel.objects.filter(
@@ -79,7 +81,7 @@ class StatView(View):
         return render(request,"stat/stat.html",context)
     
 
-class DateStatView(View):
+class DateStatView(LoginRequiredMixin,View):
     def get(self, request):
         context = {
             "today_date": today_date,
@@ -131,7 +133,7 @@ class DateStatView(View):
         return render(request, "stat/date-stat.html", context)
     
 
-class StatDiagrammaView(View):
+class StatDiagrammaView(LoginRequiredMixin,View):
     def get(self, request):
 
         # 7 kunlik

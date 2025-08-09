@@ -2,12 +2,13 @@ from django.shortcuts import render,redirect,get_object_or_404
 from django.views import View
 from django.contrib import messages
 from django.core.paginator import Paginator
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from app_category.models import CategoryModel
 from app_category.forms import CategoryEditForm
 
 
-class CategoryListView(View):
+class CategoryListView(LoginRequiredMixin,View):
     def get(self, request):
         user = request.user
         categories = user.categories.all()
@@ -27,7 +28,7 @@ class CategoryListView(View):
         return render(request, 'category/categories-table.html', context)
 
 
-class CategoryDetail(View):
+class CategoryDetail(LoginRequiredMixin,View):
     def get(self,request,pk):
         category = get_object_or_404(CategoryModel,id=pk,user=request.user)
 
@@ -50,7 +51,7 @@ class CategoryDetail(View):
         category_form.add_error(None,"Formani to'ldiring!")
         return render(request,"category/category-detail.html",{"category_form":category_form})
     
-class CategoryAddView(View):
+class CategoryAddView(LoginRequiredMixin,View):
     def get(self, request):
         return render(request, 'category/categories-add.html')
 
@@ -75,7 +76,7 @@ class CategoryAddView(View):
 
         return redirect('app_category:category-add')  # O'zingizga mos yo'nalishga
 
-class CategoryDeleteView(View):
+class CategoryDeleteView(LoginRequiredMixin,View):
     def post(self,request,pk):
         category = get_object_or_404(CategoryModel, user=request.user, id=pk)
         category.delete()
