@@ -65,7 +65,6 @@ def verify_view(request):
         real_code = cache.get(phone)
         if user_code == real_code:
             request.session['phone_verified'] = True
-            print(request.session['phone_verified'])
             return redirect('app_auth:register')
         else:
             messages.error(request, 'Kod noto‘g‘ri!')
@@ -167,4 +166,69 @@ class ProfileView(LoginRequiredMixin,View):
                 messages.error(request,f"{password_form.errors}")
                 
             return render(request,"auth/profile.html",{"password_form":password_form})
+        
+class ForgetPasswordView(View):
+    def get(self,request):
+        return render(request,"auth/password-forget.html")
+    
+    def post(self,request):
+        password_phone = request.POST.get('password_phone')
+        if User.objects.filter(username=password_phone).exists():
+            code = str(random.randint(1000, 9999))
+            cache.set(password_phone, code, timeout=300)  # 5 daqiqa
+            # SMS jo‘natish logikasi shu yerga yoziladi
+            print(f"Kod: {code}") 
+            request.session['password_phone'] = password_phone
+            return redirect('app_auth:password-forget-confirm')
+        else:
+            messages.error(request,"Bu telefon raqam bilan foydalanuvchi mavjud emas.")
+        return render(request,"auth/password-forget.html")
+    
+class ForgetPasswordConfimView(View):
+    def get(self,request):
+        return render(request,'auth/password-forget-confirm.html')
+
+    def post(self,request):
+        password_phone = request.session.get('password_phone')
+        user_code = request.POST.get('password_code')
+        real_code = cache.get(password_phone)
+        if user_code == real_code:
+            request.session['password_phone_verified'] = True
+            return redirect('app_auth:password-forget-done')
+        else:
+            messages.error(request, 'Kod noto‘g‘ri!')
+        return render(request,'auth/password-forget-confirm.html')
+
+class ForgetPasswordDone(View):
+    def get(self,request):
+        if request.session.get('password_phone_verified') != True:
+            return redirect('app_auth:password-forget')
+        return render(request,'auth/password-forget-done.html')
+    
+    def post(self,request):
+        if request.session.get('password_phone_verified') != True:
+            return redirect('app_auth:password-forget')
+        form = forms.ForgetPasswordForm(request.POST)
+        if form.is_valid():
+            password_phone = request.session.get('password_phone')
+            new_password = form.cleaned_data['new_password1']
+            try:
+                user = User.objects.get(username=password_phone)
+                user.set_password(new_password)
+                user.save()
+                messages.success(request,"Parolingiz o'zgartirildi!")
+                request.session.pop('password_phone_verified', None)
+                request.session.pop('password_phone', None)
+                return redirect('app_auth:login')
+            except Exception as e:
+                    form.add_error(None, f"❌ Xatolik: {str(e)}")
+        else:
+            messages.error(request,"Yangi parol va tasdiqlash paroli bir xil emas!")
+
+        return render(request,'auth/password-forget-done.html')
+
+
+                
+
+
         

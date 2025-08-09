@@ -43,3 +43,16 @@ class ChangePasswordForm(forms.Form):
         if pass1 != pass2:
             self.add_error(None, "Yangi parol va tasdiqlash paroli bir xil emas!")
         return cleaned_data
+    
+
+class ForgetPasswordForm(forms.Form):
+    new_password1 = forms.CharField()
+    new_password2 = forms.CharField()
+
+    def clean(self) -> dict[str, Any]:
+        cleaned_data = super().clean()
+        pass1 = cleaned_data.get("new_password1")
+        pass2 = cleaned_data.get("new_password2")
+        if pass1 != pass2:
+            self.add_error(None, "Yangi parol va tasdiqlash paroli bir xil emas!")
+        return cleaned_data
