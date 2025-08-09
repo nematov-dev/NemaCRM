@@ -123,7 +123,6 @@ class ProfileView(LoginRequiredMixin,View):
                 image = profile_form.cleaned_data['image']
                 first_name = profile_form.cleaned_data['first_name']
                 last_name = profile_form.cleaned_data['last_name']
-                phone = profile_form.cleaned_data['phone']
                 username = profile_form.cleaned_data['username']
 
                 user = request.user
@@ -136,8 +135,6 @@ class ProfileView(LoginRequiredMixin,View):
                     user.last_name = last_name
                 if image:
                     user.profile.image = image
-                if phone:
-                    user.profile.phone = phone
 
                 user.save()
                 user.profile.save()

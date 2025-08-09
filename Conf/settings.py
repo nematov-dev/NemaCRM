@@ -14,7 +14,7 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG")
 
-ALLOWED_HOSTS = ['nemacrm.uz','www.nemacrm.uz']
+ALLOWED_HOSTS = ['127.0.0.1','nemacrm.uz','www.nemacrm.uz']
 
 
 # Application definition
