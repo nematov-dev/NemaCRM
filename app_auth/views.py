@@ -1,4 +1,4 @@
-from datetime import date,timedelta
+from datetime import date,timedelta,datetime
 import random
 
 from django.shortcuts import render,redirect
@@ -11,6 +11,7 @@ from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.hashers import check_password
 from django.core.cache import cache
+from django.utils import timezone
 
 from app_auth import forms
 
@@ -18,6 +19,12 @@ User = get_user_model()
 
 today_date = date.today()
 day = today_date + timedelta(days=2)
+
+# date → datetime qilib olish
+day_datetime = datetime.combine(day, datetime.min.time())
+
+# timezone qo‘shib berish
+day_datetime = timezone.make_aware(day_datetime)
 
 class LoginView(View):
     def get(self,request):
@@ -94,11 +101,13 @@ class RegisterView(View):
                     password=password1
                 )
                 # Profil maydonini to‘ldirish (misol uchun)
-                user.profile.subscription = day  # 'day' oldindan aniqlangan bo‘lishi kerak
+                user.profile.subscription = day_datetime  # 'day' oldindan aniqlangan bo‘lishi kerak
                 user.profile.save()
                 request.session.pop('phone_verified', None)
                 request.session.pop('phone', None)
-                return redirect('app_auth:login')
+                messages.success(request,"Ro'yxatdan o'tingiz tizimga kirishigiz mumkin!")
+                return redirect('app_auth:register')
+            
             except Exception as e:
                 form.add_error('phone', f"❌ Xatolik: {str(e)}")
         else:
