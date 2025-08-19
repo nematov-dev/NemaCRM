@@ -3,7 +3,6 @@ import random
 
 from django.shortcuts import render,redirect
 from django.views import View
-from django.db import IntegrityError
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -56,9 +55,11 @@ def phone_view(request):
         phone = request.POST.get('phone')
         if not User.objects.filter(username=phone).exists():
             code = str(random.randint(1000, 9999))
+            message = f"Ro'yxatdan o'tish uchun tasdiqlash kod: {code}"
             cache.set(phone, code, timeout=300)  # 5 daqiqa
-            # SMS jo‘natish logikasi shu yerga yoziladi
-            print(f"Kod: {code}") 
+            # SMS jo‘natish 
+            # eskiz_send_sms(phone,message)
+            # print(f"Kod: {code}") 
             request.session['phone'] = phone
             return redirect('app_auth:verify')
         else:

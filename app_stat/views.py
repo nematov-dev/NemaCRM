@@ -5,12 +5,13 @@ from django.views import View
 from django.db.models import Sum,F
 from collections import defaultdict
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.utils import timezone
 
 
 from app_order.models import OrderModel
 from app_product.models import ProductModel
 
-today_date = date.today()
+today_date = timezone.localdate()
 week_ago = today_date - timedelta(days=7)
 month_ago = today_date - timedelta(days=30)
 month_ago_3 = today_date - timedelta(days=90)
