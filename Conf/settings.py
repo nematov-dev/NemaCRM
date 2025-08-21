@@ -145,3 +145,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = '/auth/login/'
 
 
+CSRF_TRUSTED_ORIGINS = ['https://nemacrm.uz', 'https://www.nemacrm.uz']
+CORS_ALLOWED_ORIGINS = ['https://nemacrm.uz', 'https://www.nemacrm.uz']
