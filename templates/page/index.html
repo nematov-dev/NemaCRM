@@ -1,0 +1,148 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NemaCRM - Bosh sahifa</title>
+  <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="#">NemaCRM</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto text-uppercase fw-semibold">
+        <li class="nav-item"><a class="nav-link" href="#home">Bosh sahifa</a></li>
+        <li class="nav-item"><a class="nav-link" href="#about">Biz haqimizda</a></li>
+        <li class="nav-item"><a class="nav-link" href="#pricing">Tariflar</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contact">Aloqa</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<header id="home" class="vh-100 d-flex align-items-center text-white bg-dark"
+        style="background: url('{% static "assets/img/hero-bg.jpg" %}') no-repeat center/cover;">
+  <div class="container text-center">
+    <h1 class="display-4 fw-bold">Biznesingiz uchun professional CRM tizimi</h1>
+    <p class="lead mt-3">Savdo, mijozlar va statistikani oson boshqarish</p>
+    <a href="#pricing" class="btn btn-primary btn-lg mt-4">Tariflarni ko‘rish</a>
+  </div>
+</header>
+
+<!-- About -->
+<section id="about" class="py-5 bg-light">
+  <div class="container text-center">
+    <h2 class="fw-bold mb-4">Biz haqimizda</h2>
+    <p class="lead text-muted">
+      NemaCRM – bu zamonaviy va samarali biznes boshqaruv tizimi.  
+      U sizga mijozlaringizni kuzatish, savdo jarayonlarini boshqarish va  
+      kompaniyangiz faoliyatini tahlil qilish imkonini beradi.
+    </p>
+  </div>
+</section>
+
+<!-- Pricing -->
+<section id="pricing" class="py-5">
+  <div class="container text-center">
+    <h2 class="fw-bold mb-5">Tariflar</h2>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="card shadow border-0 h-100">
+          <div class="card-body">
+            <h5 class="card-title fw-bold">Starter</h5>
+            <p class="display-6 fw-bold">$9</p>
+            <ul class="list-unstyled">
+              <li>10 ta foydalanuvchi</li>
+              <li>Asosiy CRM funksiyalari</li>
+              <li>Email qo‘llab-quvvatlash</li>
+            </ul>
+            <a href="#" class="btn btn-outline-primary">Boshlash</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card shadow border-primary h-100">
+          <div class="card-body">
+            <h5 class="card-title fw-bold text-primary">Professional</h5>
+            <p class="display-6 fw-bold text-primary">$29</p>
+            <ul class="list-unstyled">
+              <li>50 ta foydalanuvchi</li>
+              <li>To‘liq CRM imkoniyatlari</li>
+              <li>Telefon qo‘llab-quvvatlash</li>
+            </ul>
+            <a href="#" class="btn btn-primary">Boshlash</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card shadow border-0 h-100">
+          <div class="card-body">
+            <h5 class="card-title fw-bold">Enterprise</h5>
+            <p class="display-6 fw-bold">$99</p>
+            <ul class="list-unstyled">
+              <li>Cheksiz foydalanuvchi</li>
+              <li>Maxsus integratsiyalar</li>
+              <li>24/7 qo‘llab-quvvatlash</li>
+            </ul>
+            <a href="#" class="btn btn-outline-primary">Boshlash</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section id="contact" class="py-5 bg-light">
+  <div class="container">
+    <h2 class="fw-bold text-center mb-5">Aloqa</h2>
+    <div class="row g-4">
+      <div class="col-md-6">
+        <form>
+          <div class="mb-3">
+            <input type="text" class="form-control" placeholder="Ismingiz" required>
+          </div>
+          <div class="mb-3">
+            <input type="email" class="form-control" placeholder="Email manzil" required>
+          </div>
+          <div class="mb-3">
+            <textarea class="form-control" rows="4" placeholder="Xabar"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Yuborish</button>
+        </form>
+      </div>
+      <div class="col-md-6">
+        <h5 class="fw-bold">Manzil:</h5>
+        <p>Toshkent, O‘zbekiston</p>
+        <h5 class="fw-bold">Telefon:</h5>
+        <p>+998 90 123 45 67</p>
+        <h5 class="fw-bold">Email:</h5>
+        <p>info@nemacrm.uz</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-dark text-white text-center py-3">
+  <p class="mb-0">&copy; 2025 NemaCRM. Barcha huquqlar himoyalangan.</p>
+  <div class="mt-2">
+    <a href="#" class="text-white me-3"><i class="fab fa-telegram"></i></a>
+    <a href="#" class="text-white me-3"><i class="fab fa-instagram"></i></a>
+    <a href="#" class="text-white"><i class="fab fa-github"></i></a>
+  </div>
+</footer>
+
+<script src="{% static 'assets/js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

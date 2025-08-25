@@ -5,9 +5,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 from app_page.models import NotificationModel
 
-# class IndexView(View):
-#     def get(self,request):
-#         return render(request,'index.html')
+class IndexView(View):
+    def get(self,request):
+        return render(request,'page/index.html')
 
 class NotificationView(LoginRequiredMixin,View):
     def get(self,request):
