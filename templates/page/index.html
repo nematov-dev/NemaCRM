@@ -55,6 +55,14 @@
   height: 100%;
   object-fit: contain;   /* rasm buzilmasin */
 }
+.device-img {
+  max-height: 400px; /* balandlikni cheklaydi */
+  object-fit: cover; /* rasmni joyiga mos kesadi */
+  margin-top: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  border-radius: 10px; /* romka yumaloq bo‘lsin desa */
+}
 
     body {
       background: linear-gradient(180deg, #002864, #000);
@@ -216,27 +224,34 @@
   <div class="container">
     <h2 class="section-title">NemaCRM’dan lavhalar</h2>
 
-    <!-- Desktop -->
-<div class="text-center">
-  <h4><i class="fas fa-desktop text-primary"></i></h4>
-  <div id="desktopCarousel" class="carousel slide mt-3" data-bs-ride="carousel">
-    <div class="carousel-inner">
-      {% for p in pc %}
-        <div class="carousel-item {% if forloop.first %}active{% endif %}">
-          <div class="device-frame">
-            <img src="{{ p.image.url }}" class="device-img" alt="Desktop {{ forloop.counter }}">
+    <div id="carouselExample" class="carousel slide">
+      <div class="carousel-inner">
+        {% for p in pc %}
+          <div class="carousel-item {% if forloop.first %}active{% endif %}">
+            <a href="{{ p.url }}" data-bs-toggle="modal" data-bs-target="#imageModal{{ forloop.counter }}">
+              <img src="{{ p.url }}" class="device-img" alt="Desktop {{ forloop.counter }}">
+            </a>
           </div>
-        </div>
-      {% endfor %}
+    
+          <!-- Modal -->
+          <div class="modal fade" id="imageModal{{ forloop.counter }}" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+              <div class="modal-content bg-transparent border-0">
+                <img src="{{ p.url }}" class="img-fluid rounded-3" alt="Image">
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+      </button>
     </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#desktopCarousel" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon"></span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#desktopCarousel" data-bs-slide="next">
-      <span class="carousel-control-next-icon"></span>
-    </button>
-  </div>
-</div>
+    
 
   </div>
 </section>
