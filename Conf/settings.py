@@ -147,3 +147,11 @@ LOGIN_URL = '/auth/login/'
 
 CSRF_TRUSTED_ORIGINS = ['https://nemacrm.uz', 'https://www.nemacrm.uz']
 CORS_ALLOWED_ORIGINS = ['https://nemacrm.uz', 'https://www.nemacrm.uz']
+
+# settings.py
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = config("EMAIL")
+EMAIL_HOST_PASSWORD = config("PASSWORD")

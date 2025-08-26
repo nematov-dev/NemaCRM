@@ -13,6 +13,7 @@ from django.core.cache import cache
 from django.utils import timezone
 
 from app_auth import forms
+from app_auth.utils import send_verification_code
 
 User = get_user_model()
 
@@ -54,12 +55,8 @@ def phone_view(request):
     if request.method == 'POST':
         phone = request.POST.get('phone')
         if not User.objects.filter(username=phone).exists():
-            code = str(random.randint(1000, 9999))
-            message = f"Ro'yxatdan o'tish uchun tasdiqlash kod: {code}"
-            cache.set(phone, code, timeout=300)  # 5 daqiqa
-            # SMS jo‘natish 
-            # eskiz_send_sms(phone,message)
-            # print(f"Kod: {code}") 
+            code = str(send_verification_code(phone))
+            cache.set(f"verify:{phone}", code, 300)  # 5 daqiqa
             request.session['phone'] = phone
             return redirect('app_auth:verify')
         else:
@@ -70,8 +67,9 @@ def verify_view(request):
     phone = request.session.get('phone')
     if request.method == 'POST':
         user_code = request.POST.get('code')
-        real_code = cache.get(phone)
-        if user_code == real_code:
+        real_code = cache.get(f"verify:{phone}")
+        print(real_code)
+        if str(user_code) == str(real_code):
             request.session['phone_verified'] = True
             return redirect('app_auth:register')
         else:
@@ -181,14 +179,12 @@ class ForgetPasswordView(View):
     def post(self,request):
         password_phone = request.POST.get('password_phone')
         if User.objects.filter(username=password_phone).exists():
-            code = str(random.randint(1000, 9999))
-            cache.set(password_phone, code, timeout=300)  # 5 daqiqa
-            # SMS jo‘natish logikasi shu yerga yoziladi
-            print(f"Kod: {code}") 
+            code = send_verification_code(password_phone)
+            cache.set(f"verify:{password_phone}", code, 300)  # 5 daqiqa
             request.session['password_phone'] = password_phone
             return redirect('app_auth:password-forget-confirm')
         else:
-            messages.error(request,"Bu telefon raqam bilan foydalanuvchi mavjud emas.")
+            messages.error(request,"Bu email bilan foydalanuvchi mavjud emas.")
         return render(request,"auth/password-forget.html")
     
 class ForgetPasswordConfimView(View):
@@ -198,7 +194,7 @@ class ForgetPasswordConfimView(View):
     def post(self,request):
         password_phone = request.session.get('password_phone')
         user_code = request.POST.get('password_code')
-        real_code = cache.get(password_phone)
+        real_code = cache.get(f"verify:{password_phone}")
         if user_code == real_code:
             request.session['password_phone_verified'] = True
             return redirect('app_auth:password-forget-done')
