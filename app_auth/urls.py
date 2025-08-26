@@ -5,7 +5,7 @@ from app_auth import views
 app_name = 'app_auth'
 
 urlpatterns = [
-    path('phone/', views.phone_view, name='phone'),
+    path('email/', views.phone_view, name='phone'),
     path('verify/', views.verify_view, name='verify'),
     path('register/', views.RegisterView.as_view(), name='register'),    
     path('login/',views.LoginView.as_view(),name='login'),

@@ -74,7 +74,7 @@
 
             <!-- Username -->
             <div class="input-style-1 mb-3">
-              <label for="id_username">Telefon raqam</label>
+              <label for="id_username">Email</label>
               <input id="id_username" type="text" name="username" class="form-control" value="{{ request.user.username }}" readonly>
               {% for error in profile_form.username.errors %}
                 <small class="text-danger">{{ error }}</small>
@@ -83,9 +83,7 @@
             <div class="input-style-1 mb-3">
               <h6 class="text">Obunangiz muddati: <span style="background-color: yellow;" >{{ request.user.profile.subscription|date:"d.m.Y" }}</span> </h6>
             </div>
-            <div class="input-style-1 mb-3">
               <p class="text">Obunangiz muddatini uzaytirish uchun adminga murojaat qiling: Telegram: <a href="https:t.me/N_Saidakbar">@N_Saidakbar</a> Tel: <a href="tel:+998976560026">+998976560026</a> </p>
-            </div>
 
             <!-- Saqlash tugmasi -->
             <div class="d-grid">
