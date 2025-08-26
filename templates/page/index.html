@@ -246,28 +246,6 @@
   </div>
 </div>
 
-<!-- Desktop -->
-<div class="device-frame">
-  <div id="pcCarousel" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-inner">
-      {% for p in pc %}
-      <div class="carousel-item {% if forloop.first %}active{% endif %}">
-        <img src="{{ p.image.url }}" 
-             class="d-block w-100 device-img" 
-             alt="Desktop {{ forloop.counter }}" 
-             onclick="openLightbox('{{ p.image.url }}')">
-      </div>
-      {% endfor %}
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#pcCarousel" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon"></span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#pcCarousel" data-bs-slide="next">
-      <span class="carousel-control-next-icon"></span>
-    </button>
-  </div>
-</div>
-
 <!-- Lightbox -->
 <div id="lightbox" class="lightbox" onclick="closeLightbox(event)">
   <div class="lightbox-inner">
@@ -278,17 +256,23 @@
 <style>
 .device-frame {
   max-width: 900px;
-  margin: auto;
-  padding: 15px 10px;
-  border: 12px solid #333;
-  border-radius: 15px;
+  margin: 20px auto;   /* tepa-pastdan ham ozgina joy */
+  padding: 8px;        /* paddingni kamaytirdim */
+  border: 10px solid #333; /* ramka chegarasi ozgina yupqaroq */
+  border-radius: 12px;
   background: #111;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.4);
   position: relative;
+  display: flex;       /* rasmni markazlash uchun */
+  justify-content: center;
+  align-items: center;
 }
 
 .device-img {
-  border-radius: 8px;
+  border-radius: 6px;
+  max-height: 75vh;   /* balandligi ekranga mos */
+  width: auto;
+  margin: auto;
   cursor: pointer;
   transition: transform 0.3s;
 }
