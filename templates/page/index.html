@@ -26,6 +26,36 @@
   <!-- Animate.css -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
   <style>
+    .device-frame {
+  width: 500px;              /* romka kengligi */
+  height: 300px;             /* romka balandligi */
+  margin: 0 auto;
+  background: #111;
+  border: 8px solid #333;    /* monitor chegarasi */
+  border-radius: 12px;       /* yumaloqlash */
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 25px rgba(0,0,0,0.6);
+}
+
+.device-frame::before {
+  content: "";
+  width: 60px;
+  height: 8px;
+  background: #666;
+  border-radius: 4px;
+  position: absolute;
+  top: -16px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.device-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;   /* rasm buzilmasin */
+}
+
     body {
       background: linear-gradient(180deg, #002864, #000);
       color: #f8f9fa;
@@ -187,24 +217,27 @@
     <h2 class="section-title">NemaCRM’dan lavhalar</h2>
 
     <!-- Desktop -->
-    <div class="text-center">
-      <h4><i class="fas fa-desktop text-primary"></i></h4>
-      <div id="desktopCarousel" class="carousel slide mt-3" data-bs-ride="carousel">
-        <div class="carousel-inner">
-          {% for p in pc %}
-            <div class="carousel-item {% if forloop.first %}active{% endif %}">
-              <img src="{{ p.image.url }}" class="device-img" alt="Desktop {{ forloop.counter }}">
-            </div>
-          {% endfor %}
+<div class="text-center">
+  <h4><i class="fas fa-desktop text-primary"></i></h4>
+  <div id="desktopCarousel" class="carousel slide mt-3" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      {% for p in pc %}
+        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+          <div class="device-frame">
+            <img src="{{ p.image.url }}" class="device-img" alt="Desktop {{ forloop.counter }}">
+          </div>
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#desktopCarousel" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon"></span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#desktopCarousel" data-bs-slide="next">
-          <span class="carousel-control-next-icon"></span>
-        </button>
-      </div>
+      {% endfor %}
     </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#desktopCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#desktopCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon"></span>
+    </button>
+  </div>
+</div>
+
   </div>
 </section>
 <hr>
