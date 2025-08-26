@@ -15,12 +15,6 @@ class NotificationModel(models.Model):
         verbose_name = "Notification"
         verbose_name_plural = "Notifications"
 
-class NemaCRMPhonePhotoModel(models.Model):
-    image = models.ImageField(upload_to="nemacrm/telefon-lavhalar")
-
-    class Meta:
-        verbose_name = "Phone"
-        verbose_name_plural = "Phones"
 
 class NemaCRMPCPhotoModel(models.Model):
     image = models.ImageField(upload_to="nemacrm/pc-lavhalar")

@@ -3,14 +3,12 @@ from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-from app_page.models import NotificationModel,NemaCRMPhonePhotoModel,NemaCRMPCPhotoModel
+from app_page.models import NotificationModel,NemaCRMPCPhotoModel
 
 class IndexView(View):
     def get(self,request):
-        phones = NemaCRMPhonePhotoModel.objects.all()
         pc = NemaCRMPCPhotoModel.objects.all()
         context = {
-            "phones":phones,
             "pc":pc
         }
         return render(request,'page/index.html',context)
