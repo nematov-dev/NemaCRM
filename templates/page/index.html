@@ -230,8 +230,8 @@
         <div class="carousel-inner">
           {% for p in pc %}
           <div class="carousel-item {% if forloop.first %}active{% endif %}">
-            <a href="{{ p.url }}" target="_blank">
-              <img src="{{ p.url }}" class="d-block w-100 device-img" alt="Desktop {{ forloop.counter }}">
+            <a href="{{ p.image.url }}" target="_blank">
+              <img src="{{ p.image.url }}" class="d-block w-100 device-img" alt="Desktop {{ forloop.counter }}">
             </a>
           </div>
           {% endfor %}
