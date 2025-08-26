@@ -9,6 +9,6 @@ class NotificationModelAdmin(admin.ModelAdmin):
     list_filter = ['created_at']
     ordering = ['-created_at']
 
-admin.register(NemaCRMPhonePhotoModel)
-admin.register(NemaCRMPCPhotoModel)
+admin.site.register(NemaCRMPhonePhotoModel)
+admin.site.register(NemaCRMPCPhotoModel)
 
