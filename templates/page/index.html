@@ -254,6 +254,27 @@
 </div>
 
 <style>
+  .image-frame {
+  position: relative;
+  width: 100%;
+  max-width: 400px; /* romka kengligi */
+  border: 8px solid #333; /* romka qalinligi */
+  border-radius: 12px;
+  overflow: hidden; /* ortiqcha joylarni yashiradi */
+  margin: auto;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* yon + tepa/pastini romkaga to‘liq moslab beradi */
+  display: block;
+}
+
 .device-frame {
   max-width: 900px;
   margin: 20px auto;   /* tepa-pastdan ham ozgina joy */
