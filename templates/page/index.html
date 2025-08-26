@@ -231,7 +231,7 @@
       {% for p in pc %}
       <div class="carousel-item {% if forloop.first %}active{% endif %}">
         <img src="{{ p.image.url }}" 
-             class="d-block w-100 device-img" 
+             class="device-img" 
              alt="Desktop {{ forloop.counter }}" 
              onclick="openLightbox('{{ p.image.url }}')">
       </div>
@@ -246,44 +246,32 @@
   </div>
 </div>
 
+<!-- Lightbox -->
+<div id="lightbox" class="lightbox" onclick="closeLightbox(event)">
+  <div class="lightbox-inner">
+    <img id="lightbox-img" class="lightbox-content">
+  </div>
+</div>
+
 <style>
-  .image-frame {
-  position: relative;
-  width: 100%;
-  max-width: 400px; /* romka kengligi */
-  border: 8px solid #333; /* romka qalinligi */
-  border-radius: 12px;
-  overflow: hidden; /* ortiqcha joylarni yashiradi */
-  margin: auto;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.image-frame img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* yon + tepa/pastini romkaga to‘liq moslab beradi */
-  display: block;
-}
-
 .device-frame {
   max-width: 900px;
+  width: 100%;
+  height: 500px; /* romka balandligi */
   margin: 20px auto;
-  padding: 0; /* ortiqcha joylarni olib tashladik */
   border: 10px solid #333;
   border-radius: 12px;
   background: #111;
   box-shadow: 0 6px 18px rgba(0,0,0,0.4);
-  overflow: hidden; /* tashqariga chiqmasin */
+  overflow: hidden; /* ortiqcha joyni kesadi */
+  position: relative;
 }
 
 .device-img {
   width: 100%;
   height: 100%;
-  object-fit: cover;   /* romkani to‘liq to‘ldiradi */
-  border-radius: 0;
+  object-fit: cover; /* romkani to‘liq to‘ldiradi, yon + tepa/past */
+  display: block;
   cursor: pointer;
   transition: transform 0.3s;
 }
@@ -291,7 +279,6 @@
 .device-img:hover {
   transform: scale(1.02);
 }
-
 
 /* Lightbox overlay */
 .lightbox {
@@ -305,13 +292,11 @@
   padding: 20px;
 }
 
-/* Ichki quti */
 .lightbox-inner {
   max-width: 90%;
   max-height: 90%;
 }
 
-/* Lightbox image */
 .lightbox-content {
   width: 100%;
   height: auto;
@@ -321,7 +306,6 @@
   animation: zoomIn 0.3s ease;
 }
 
-/* Animatsiya */
 @keyframes zoomIn {
   from { transform: scale(0.9); opacity: 0; }
   to { transform: scale(1); opacity: 1; }
@@ -330,9 +314,7 @@
 /* Mobil moslashuv */
 @media (max-width: 768px) {
   .device-frame {
-    max-width: 100%;
-    padding: 10px 5px;
-    border-width: 8px;
+    height: 300px; /* kichik ekran uchun */
   }
   .lightbox-inner {
     max-width: 95%;
@@ -364,6 +346,7 @@ document.addEventListener("keydown", function(e) {
   }
 });
 </script>
+
 
 
   </div>
