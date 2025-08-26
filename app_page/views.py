@@ -3,11 +3,17 @@ from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-from app_page.models import NotificationModel
+from app_page.models import NotificationModel,NemaCRMPhonePhotoModel,NemaCRMPCPhotoModel
 
 class IndexView(View):
     def get(self,request):
-        return render(request,'page/index.html')
+        phones = NemaCRMPhonePhotoModel.objects.all()
+        pc = NemaCRMPCPhotoModel.objects.all()
+        context = {
+            "phones":phones,
+            "pc":pc
+        }
+        return render(request,'page/index.html',context)
 
 class NotificationView(LoginRequiredMixin,View):
     def get(self,request):

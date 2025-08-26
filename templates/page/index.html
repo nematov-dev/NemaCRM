@@ -51,6 +51,20 @@
     footer {
       background: #000;
     }
+    @keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+.logo-anim {
+  animation: bounce 2s infinite;
+}
+.about-img {
+  max-width: 300px; /* rasm kengligi */
+  height: auto;
+}
+
+
   </style>
 </head>
 <body>
@@ -59,8 +73,12 @@
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow">
   <div class="container">
     <a class="navbar-brand fw-bold d-flex align-items-center" href="#">
-      <img src="{% static 'assets/images/logo/crm.png' %}" alt="NemaCRM Logo" class="me-2">
-      <span class="fs-3">Nema<span style="color: rgb(30, 30, 30);" >CRM</span> </span>
+      <img src="{% static 'assets/images/logo/crm.png' %}" 
+     alt="NemaCRM Logo" 
+     class="me-2" style="width:40px; height:auto;">
+
+<span class="fs-6">NemaCRM</span>
+
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
@@ -72,22 +90,21 @@
         <li class="nav-item"><a class="nav-link" href="#screens">Lavhalar</a></li>
         <li class="nav-item"><a class="nav-link" href="#pricing">Tariflar</a></li>
         <li class="nav-item"><a class="nav-link" href="#contact">Aloqa</a></li>
-        {% if request.user.is_authenticate %}
-            <li class="nav-item"><a class="nav-link" href="{% url 'app_auth:login' %}">Kirish</a></li>
+        {% if request.user.is_authenticated %}
+            <li class="nav-item"><a class="nav-link" href="{% url 'app_dashboard:dashboard' %}">Tizimga qaytish</a></li>
         {% else %}
             <li class="nav-item"><a class="nav-link" href="{% url 'app_auth:register' %}">Ro'yxatdan o'tish</a></li>
-            <li class="nav-item"><a class="nav-link" href="{% url 'app_auth:login' %}">Kirish</a></li>
-
+            <li class="nav-item"><a class="nav-link" href="{% url 'app_auth:login' %}">Tizimga kirish</a></li>
         {% endif %}
       </ul>
     </div>
   </div>
 </nav>
 
-<!-- Hero --> <br><br><br><br><br>
+<!-- Hero --> <br><br><br><br>
 <header id="home" class="vh-90 d-flex align-items-center text-white">
     <div class="container text-center">
-        <img height="100px" src="{% static 'assets/images/logo/crm.png' %}" alt=""><br><br>
+      <img height="100px" src="{% static 'assets/images/logo/crm.png' %}" alt="" class="logo-anim"><br>
       <h3 class="fw-bold animate__animated animate__fadeInDown">
         NemaCRM orqali biznesingizni yangi bosqichga olib chiqing!
       </h3>
@@ -102,23 +119,54 @@
         </a>
       </div>
       <!-- Tariflarni ko‘rish button -->
-      <a href="#pricing" class="btn btn-light btn-lg mt-4 animate__animated animate__zoomIn">
-        Tariflarni ko‘rish
+      <a href="#about" class="btn btn-light btn-lg mt-4 animate__animated animate__zoomIn">
+        Batafsil ma'lumot
       </a>
     </div>
   </header>
 <hr>  
-<!-- About -->
-<section id="about">
+<section id="about" class="py-5">
   <div class="container text-center">
-    <h2 class="section-title">Biz haqimizda</h2>
-    <p class="lead">
-      <b>NemaCRM</b> – bu zamonaviy biznes boshqaruv tizimi.  
-      Siz mijozlaringizni kuzatishingiz, savdo jarayonlarini nazorat qilishingiz va kompaniya faoliyatingizni tahlil qilishingiz mumkin.  
-      CRM tizimi yordamida biznesingizni yanada samarali va tezkor qiling!
-    </p>
+    <!-- Sarlavha yuqorida markazda -->
+    <h2 class="section-title mb-1">Biz haqimizda</h2><br>
+    
+    <div class="row align-items-center">
+      <!-- Chap tomonda professional texnologiya stiker tasvir -->
+      <div class="col-md-5 mb-4 mb-md-0 text-center">
+        <img src="{% static 'assets/images/image.png' %}" 
+             alt="Technology Illustration" 
+             class="img-fluid about-img">
+      </div>
+      
+      <!-- O‘ng tomonda matn -->
+      <div class="col-md-7 text-start">
+        <p class="lead mb-4">
+          <b>NemaCRM</b> – zamonaviy savdoni boshqarish tizimi.
+          Savdo jarayonlarini nazorat qiling, do‘kon faoliyatini tahlil qiling. <b>NemaCRM</b> yordamida biznesingiz
+          yanada samarali va tezkor bo‘ladi.
+        </p>
+        
+        <ul class="list-unstyled fs-6">
+          <li class="mb-2">✔️ <b>Istalgan savdo bilan mos</b> – xohlagan turdagi do'koningizga moslashingiz mumkin.</li>
+          <li class="mb-2">✔️ <b>Masofadan boshqaruv</b> – telefon orqali istalgan joydan savdo va ombor holatini ko‘ring.</li>
+          <li class="mb-2">✔️ <b>Mahsulot/ombor nazorati</b> – qolgan miqdor, yo‘q mahsulotlar va “kam qolgan” mahsulotlarni kuzatish.</li>
+          <li class="mb-2">✔️ <b>Ko‘rsatkichlar va hisobotlar</b> – kunlik, oylik va 3 oygacha bo‘lgan savdo statistikasi, kunlik sotilgan mahsulotlari ro'yxati, eng ko'p sotilgan top mahsulotlar.</li>
+        </ul><br>
+
+        <p> <b> Boshlash tugmasi orqali ro'yxatdan o'tib 1 oylik tekin obunani sinab ko'ring!</b></p>
+        
+        <div class="mt-3">
+          <a href="#pricing" class="btn btn-primary me-2">Tariflar</a>
+          <a href="#contact" class="btn btn-outline-primary">Bog'lanish</a>
+        </div>
+        
+      </div>
+    </div>
   </div>
 </section>
+
+
+
 <hr>
 <!-- Screenshots -->
 <section id="screens">
@@ -130,15 +178,12 @@
       <h4><i class="fas fa-mobile-alt text-primary"></i> Mobil ko‘rinish</h4>
       <div id="mobileCarousel" class="carousel slide mt-3" data-bs-ride="carousel">
         <div class="carousel-inner">
-          <div class="carousel-item active">
-            <img src="data:image/jpeg;base64,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" class="device-img" alt="Mobile 1">
-          </div>
-          <div class="carousel-item">
-            <img src="{% static 'assets/img/mobile2.png' %}" class="device-img" alt="Mobile 2">
-          </div>
-          <div class="carousel-item">
-            <img src="{% static 'assets/img/mobile3.png' %}" class="device-img" alt="Mobile 3">
-          </div>
+          {% for phone in phones %}
+            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+              <img src="{{ phone.url }}" class="device-img" alt="Mobile {{ forloop.counter }}">
+            </div>
+          {% endfor %}
+
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#mobileCarousel" data-bs-slide="prev">
           <span class="carousel-control-prev-icon"></span>
@@ -154,15 +199,11 @@
       <h4><i class="fas fa-desktop text-primary"></i> Desktop ko‘rinish</h4>
       <div id="desktopCarousel" class="carousel slide mt-3" data-bs-ride="carousel">
         <div class="carousel-inner">
-          <div class="carousel-item active">
-            <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBw8PDQ0NDw8NDQ0NDQ0NDQ0NDQ8NDQ0NFREWFhURFRUYHSggGBolGxUVITEhJSkrMS8uFx8zOj84NygtLi0BCgoKDg0OFRAPFSsdFR0vKy0rLSsrKy0tKystKystLSsrKy0rKy8tNysrLSsrKysrLSstLSsrLisrLi8rLS0rN//AABEIAKgBLAMBEQACEQEDEQH/xAAbAAEBAQEAAwEAAAAAAAAAAAACAQADBAUGB//EAD4QAAIBAgMEBgQMBgMAAAAAAAABAgMRBBIhBTGT0RMiQVFTVBRxgZQVIzJCUmFyc5GxssIGM4LB4fAkofH/xAAbAQEBAQEBAQEBAAAAAAAAAAAAAQIDBgQFB//EADURAQABAwEGBAUCBAcAAAAAAAABAgMRkQQSEyExUhRBUXEFIjJTYbHwBoGhwTNCgpPR0uH/2gAMAwEAAhEDEQA/AD/g9tD+czLa+wGWBlCoxVSwMplIuUaCo0BAotBUCiwsI0VRaC5FoKLQaFoKLQaBoqwLQagGiNZFoNAw1ANBqBaDUAytC0RRaK0IVAI0FSxFEKjCoyqgEIr7vtXsMx0eYnq9fhlN1Y1M05ZqtalVhaeWMIZ3G6y5Yr5FrPtfez8KxN2b1NWZzM4n25/jD0u0xZjZ6qMRimMx06zj859cvYI/eeZhAIBgIFYozCjlBlHELkWiNC0BGitZFoKLCiyqLDUC0FFoNQDQagGg1Ei0GoBoNRINEaBlaFhqAYWBYaFhRCowqBUCoBLBRYVAr7y31935HGblMcpl5yLNdXOInHtLe1Di0+sawnAr7Z0lrfWhFymrpKVW6qfqiY/lKHRzQgxVawEAhFSxRArBUaKuRcRhcg4hYkWg0LQXItBYForQtBRaDQNBqAaDQNBqJBoNxINBoGg1AtBQYaFhoWFQAsNIwqAQKjAgV9xKnFu7Sb72cKrNuZzNMTPs87TtN2mN2muYj3lOghr1Vrv03mfD2uyNIXxd/OeJOsrGlFO6STNUWbdE5ppiJ9mbm0XbkYrrmY/MmdHFgIFYCBWsBCiMKjRVQKlhkQqiwouIwuRcBhrLm0GhYaFoqg0GokWg0DQw1kGg3ANEw1DnJDDUSDQaiRaKotBobFayLRFFoLCBUIohUYVAPuzDyygYDAYCAYCBWAhVQCBWaAgUWiqjQUWiqhVRlWAcV6vUMNRIun/u4YaipzlFoNRINBqJFouGsg4jDUS5yiMNRINEw3EubQaiQaDeRaGFFouGgYwosiiwuUZGkIosKgH3hh5ZQjASwFAgGCpYDWAgVGFYojAgUSqgVGVRaCpYqo0USxVQqi4p9hcQ1EubpFw1FQOm/wDwmG4qhzcS4biQcRutRLnKBN1uJcpRJhuJFouFyDRcNA0TDUA0RqBZGhZFFkVGRRCvvTDyqgQDAYDAYDAQK1gJYA2C5YqowosogVGVUCiyqhRCw0hRrFVLGlylgZRxuFiQdH/d5ctxW5yos1mG4rhxlRLiG4rcZUxuukVBKBd1qKnKSMTDpEuckYmGoc2ZluAZlqBZFQioFfemHlGAwGAwGAwVgIBgIFRgQKgUSqzCiyiWKotFaRooLCoaVArGhSiXCnFN7k36k2ZmYgdFh5v5r9tkZm5T6mJdFgZPflXtuZm9Hkc1+CovfJ/0x/yTxNUdIaiuqHp8ZRUJzgtVCcopvts7H2W6t6mJ9X0Uzl4VRFqh3plwmcpdIc5HOXSAZlqAZFRkUQr74w8ooGAwGAxBAMUYKgGAgUQMwosKhVEqoVUCoVUAJVYsK8vD4aEoqTvd37dN9jnVXMTMQsOqw0F81e27M79Xq3h0jTityS9SJMyJS3z+3+1CfIy6pGTKpEymSSCS+a2l/Orfe1P1M/Rsf4dPtH6Ppo6Q9fUN1O9LhI4y6w5MxLo5sy1AsioyNIB98YeUYIxBgKUQisBiiEGCoUYAhUAgaRhRZVFlVCqIVCqLKqBXscI/i4+382cqvqlql1uRpLlUKUtZ/b/bEY6GHVTM4TBqoTCbpxmZmGZpfMbTfx9b72p+pn6Vj/Do9o/R9VHSHr5stUvophxkcpdIcmYmWwZloWSVENJcD785vJqBgMBgMBgIMjBUAgViiARhRYVGFRlUWGhZVFlUWy5UWytJcGHm4atFQV33/mc6o+aW4h0eIj3oYlvA+kQ+khiVwFPEQvPrLWX7YlxJg/SIfSRMGJX0mH0kMSYVYmH0kN2fQ3XoNoVE6tVrVOpNp96cmfXbnFumPxH6PoojlDwZszMusOUmYl0hzZlqBZGhIosNIB+gHN5NgigYDAYDAQK1gIFQCWCtYogUWBGitIwosKNiqLRVhGiqNg1kbFV52FXUXrf5nOfqlumXWxG8tYDnT3z+3+yJQwqkFSA+a2k/jq33tT9TPoo+in2j9H02+kPBkyS7Q5sy3AMjUAyKjDQsKIH6Ec3kmAoGAwGIMUSwGsBmgIwqBUZRGFSwVGAWVqBaKqWKo2C5Roqi0VUsWFefho/Fx/q/NnGqfmlumXSxMt5ZRGTLnRjrU+3+yIyZdbLvRMmZS8e//oczmuddwxK7svldov46t97U/Uz6afpp9o/R9dv6YeHIku0OcjLcAyNAwosNQJFQK/QjDyKgYIwGAoGAwEAwVAIVUAlgqWCo0VUaKqWKJYKLRVR2GV5i2i5XEo5oZXdl1hjssVHIna+t2nvuc5ozOct0xhfhBdzXqszPDdIw3p0X2tetMbstRhKdaN5dZayuru3zUWYlYdM3tI3hrjIxpXze0P51b72p+pnSmflj2h3t/TT7PEkJdYc2ZbgGGoFhqBYUSKgV+hmXkWIKEYDAYCgYCAQDWCtYogVGAbjK4HMMrgXIZawjkyrgGw1AtjKg2XLQsLAsuWhZMqLKohoWwqOVixDUQnpbW6UvxuN2G4plvhWa+i/tRX9iTTS3Fr8vXV6rlKU3a8pSk7brt3LHKIh3ppxEQ4tkbhzYbFhYFhoGRRCsFfoZl5BiCgYCgYg1wJcDXAlwqXAjCoVUYUQqAFlaFhRYUWw1Asqiw0DCi2FByK1EOcqhXSKXKVQrcUuUpEy6RDlJjLcA2G4BhqAYagGRoGVRZGhYaQCEV+hXMvIrcDXIMBgMBgMEYioUQKgVAIVRYVGFgWFFhoWVRYWAbDUC2VpzlIvJqIc5SGW4hzkyNQDDcObK3AMNQ5yI1AMrcAw1AMNwLCgw0LCiw0jICFfoRh5JozTbimm42zJNNr1o5UXrdVVVFNUTVT1j0fTd2O/atUXq7dUW687szE4nHXE+aVasYRc5O0Vvf9ibRtFuxbm5cnFMOnw/4ff2/aKdn2enerq/p6zPpEecuOBxXSxc8rgszUbu+Zd58nw7bqtsoqrmjdiJxH5fq/xJ8Co+D3rdiL8XK5pzVyxuzrPXy89XkH6LzjAYDAYCAYKgVGBAosKjKoMNCyrAsNQDYagGw1Dmw0DDUAytQEg1Dmw1ASDcAw3Dm2FgGG4FhuAYagGGhYUWFFlaEggV+hGHknqsLUjDEYucnaMd79u71nldkv0WNu2u5cnFMZ/V/V/i+wX9u+A/Cdn2eneuVbvL/RPOfSI85SnCWLnnneFCDeWO5zf+9vsM27d34te4lz5bFPSPX9+c+XSG9p2nZP4R2Sdn2aYubfcj5qvT8z6RH+Wnz6zye2SSSSSSSsktEl3HqaKKbdMU0xiIfym9euX7lVy7VNVdU5mZ6zKmnJgMBiiEGCoBmVRYVGFRgFsrUQDYaFsKDDQsLAMrUAw0DDQMNObDUAytwEg05sNgw1AMNwDDQsNQDDQsKIagWFFkVAr9J9BreDW4U+Rx41vvjWHmPC3/ALdWkvQ47YOMlWqSjhq0oym5LqSs0eI27Yb9e03K6KYmmZz9VP8Ay/t/wP8AiP4dZ+GbPZu3ZouUURTPyV5iYjHbMe3WHlRobSSSWDkklZJUppJfiffRtfxOimKabdERHTnT/wBnn7/wz+Fr9yq7d2q7VXVmZmYrzM/7b2qwNeyvRq37bU5tX/A9LRfpmmN6qInz5x1fzS9slcXKotUVTRmcTNM5mM8pn+Teg1vBrcKfI1xrfdGsOXhb326tJb0Gt4NbhT5DjW++NYPC3vt1aS3oNbwa3CnyHGt98aweFvfbq0lvQa3g1uFPkONb741g8Le+3Okt6DW8Gtwp8hxrffGsL4W99urSU9BreDW4U+Q41vujWDwt77dWkp6DW8Gtwp8hxrffGsL4W99urSWeBreDW4U+Q41vvjWDwt77dWko8DW8Gtwp8hxrfdGsL4W99urSReBr+DW4U+Q41vvjWF8Ne+3Oki8BX8Gtwp8hxrfdGsL4a99udJR4Cv4NbhT5DjW++NYXw177c6SLwFfwa3CnyHGt98aw1GzXvtzpIPAV/Br8KfIvGt98awsbNe7J0kXs+v4FfhT5DjW++NYXw97snSRez6/gV+FPkXjW++NYa8Pd7J0kXs+v4Ffgz5DjW++NYajZ7vZOkg9nYjwK/BnyHGt98awsbPd7J0kHs7EeBX4NTkOPb741hqNnu9k6SD2biPAr8GpyLx7ffGsNcC72TpIPZuI8viODU5Dj2++NYaixd7J0kHszEeXxHBqchxrffGsNRYu9k6A9mYny+I4FTkONb741hrgXO2dAey8T5fE8CpyHHt98aw3wbnbOgPZeJ8tieBU5Dj2++NYa4NztnQHsvE+WxPAq8hx7ffGsNRZuds6A9lYry2J4FXkOPb741hrg3O2dBeysV5bE+71eQ49vvjWGuFX2zoD2TivLYr3eryHHt98aw1wq+2dEeycV5bFe71eQ49vvjWF4VfbOgvZOK8rivd6vIca33xrC8KvtnQXsnFeVxXu9XkONb741heFX2yL2TivK4r3eryHGt98awvCr7ZT4JxXlcV7vV5DjW++NYXh1+kv3rH0NovH4WpRr0IbOjH/l0JJdPUlap8l5Hpd0vnR+Szxr9t73rPo8s4wined7Ny1XV/C+oBlKtn0lQ6PMneV86jdXirPuvqBIvEa3qYbc7NRne+XRvrfSt7CDOVe6tLDWtG91O9+3tKO+HlK3xkqbld2yaK3dqB4e14VJqHRTs4vO4p2U8rTUXLs1Xd+Cuc7m9j5ertammM7zw9k4WvnqyxFVuMpSlCEZySTcnfradt7abramKKaqo+d1u3KIiItxz9f3+/V5ONhVdlSmo2lq5O91dd8Xft7vWd3yE1LpYvXJ0c09dM+aNtPVmA40YV1Wm5Sg6Du4xvN1E7Rtv0t8rRfV36cKLVVNU1b08/Ly8+nLPLl5+vTk1NUzyxGP6+X/AL5ejy9bxtJKKzZo5buWmmp9HJMvRfxbDEzoRjhJNVYyUnHPUpZ42emaNu3sujMxEzGen4nH7x1Iu3Lc5oiJ94idInl+PaZ83eKxVXZ6jmjTxjowjNxcoxVVWzJS3q6ur62b+ok08sZz+qTXXHzUxG91xPT2/t+Hm7OoOlRpwlOdSSjHNKpKU5Zraq7bb1v2sRTiZxnEzyieeI9M+fvLVVdVeJqiN7zxERGkcoej/hHZmPoVMRLGV3WjOFGNKPpNXEKMoueeVprq3vHRdx9V65RVjcjDlREx1dZ4XaPwnTqKpF7PWfpI9M09YSUUqeW2knHW77zcXLPAmnd+f1x+fVym3XxYq3vl9MvJ2xh8bKtQlhqtOFKLXSxnKUe13dkuto1pf5v1n5t2i5MxuTiH6mz3LFNNUXaczPT9+T29zu+Nrga4GuBrga4GuBrga4GuBzqKWem03lWfPrpu007dQPnP4VjtNYnFSxjqdDUvOmp9FlhNTcVGCi24xyJOz7++51r3MRhwt7+9O90fR5ZKyi4xik1lyvf2bnuOTu8OdLF5aSVWm5KvGVWWVRzUPnR+S9d/d2a779bU243t+M8px7+XnH9/Zyuxcnd4c45xn28/Kf7e7uo1+t14Pr3i8u6nnbtbvy5V23ae6+nJ1dPjM61j0eSzWuZ1O/1AcYKsqVTpXnnJyajSWXo4PRRTe9rV3sB40s14Po8X1ZuV+mklq46NLfHRadmoHj/xDR2hKeDqYOuqNKnKUsZQdOnOeIjeDjBOUXb5M4uzXy79gHuJN6X0dlddzA//2Q==" class="device-img" alt="Desktop 1">
-          </div>
-          <div class="carousel-item">
-            <img src="{% static 'assets/img/desktop2.png' %}" class="device-img" alt="Desktop 2">
-          </div>
-          <div class="carousel-item">
-            <img src="{% static 'assets/img/desktop3.png' %}" class="device-img" alt="Desktop 3">
-          </div>
+          {% for p in pc %}
+            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+              <img src="{{ p.url }}" class="device-img" alt="Desktop {{ forloop.counter }}">
+            </div>
+          {% endfor %}
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#desktopCarousel" data-bs-slide="prev">
           <span class="carousel-control-prev-icon"></span>
@@ -176,43 +217,38 @@
 </section>
 <hr>
 <!-- Pricing -->
-<section id="pricing">
+<section id="pricing" class="py-5">
   <div class="container text-center">
-    <h2 class="section-title">Tariflar</h2>
-    <div class="row g-4">
+    <h2 class="section-title mb-5">Tariflar</h2>
+    
+    <div class="row justify-content-center g-4">
+      
       <div class="col-md-4">
         <div class="card bg-dark text-white h-100 shadow">
           <div class="card-body">
-            <h5 class="fw-bold">Starter</h5>
-            <p class="display-6 text-primary fw-bold">$9</p>
-            <p>10 ta foydalanuvchi • Asosiy CRM • Email qo‘llab-quvvatlash</p>
+            <h5 class="fw-bold">Sinab ko'rish</h5>
+            <p class="display-6 text-primary fw-bold">$0</p>
+            <p>"Boshlash" tugmasini bosing ro'yxatdan o'ting va 1 oylik tekin obunani sinab ko'ring!</p>
             <a href="#" class="btn btn-outline-primary">Boshlash</a>
           </div>
         </div>
       </div>
+      
       <div class="col-md-4">
         <div class="card bg-dark text-white border-primary h-100 shadow">
           <div class="card-body">
-            <h5 class="fw-bold text-primary">Professional</h5>
-            <p class="display-6 text-primary fw-bold">$29</p>
-            <p>50 ta foydalanuvchi • To‘liq CRM • Telefon qo‘llab-quvvatlash</p>
-            <a href="#" class="btn btn-primary">Boshlash</a>
+            <h5 class="fw-bold text-primary">Yillik</h5>
+            <p class="display-6 text-primary fw-bold">$200</p>
+            <p>1 yillik obuna tarifi yiliga 200$ ni tashkil etadi. "Boshlash" tugmasi orqali admin bilan bog'lanib 1 yillik obunani sotib olishingiz mumkin!</p>
+            <a href="https://t.me/N_Saidakbar" class="btn btn-primary">Boshlash</a>
           </div>
         </div>
       </div>
-      <div class="col-md-4">
-        <div class="card bg-dark text-white h-100 shadow">
-          <div class="card-body">
-            <h5 class="fw-bold">Enterprise</h5>
-            <p class="display-6 text-primary fw-bold">$99</p>
-            <p>Cheksiz foydalanuvchi • Maxsus integratsiyalar • 24/7 support</p>
-            <a href="#" class="btn btn-outline-primary">Boshlash</a>
-          </div>
-        </div>
-      </div>
+      
     </div>
   </div>
 </section>
+
 <hr>
 <!-- Contact -->
 <section id="contact">
@@ -222,24 +258,24 @@
       <div class="col-md-6">
         <form>
           <div class="mb-3">
-            <input type="text" class="form-control" placeholder="Ismingiz" required>
+            <input type="text" class="form-control" placeholder="Ismingiz: " required>
           </div>
           <div class="mb-3">
-            <input type="email" class="form-control" placeholder="Email manzil" required>
+            <input type="text" class="form-control" placeholder="Telegram username: " required>
           </div>
           <div class="mb-3">
             <textarea class="form-control" rows="4" placeholder="Xabar"></textarea>
           </div>
-          <button type="submit" class="btn btn-primary">Yuborish</button>
+          <button type="submit" class="btn btn-primary"><a style="color: azure;" href="https://t.me/N_Saidakbar">Yuborish</a></button>
         </form>
       </div>
       <div class="col-md-6">
         <h5 class="fw-bold">Manzil:</h5>
-        <p>Toshkent, O‘zbekiston</p>
+        <p>Qashqadaryo viloyati,Shahrisabz shahri</p>
         <h5 class="fw-bold">Telefon:</h5>
-        <p>+998 90 123 45 67</p>
-        <h5 class="fw-bold">Email:</h5>
-        <p>info@nemacrm.uz</p>
+        <p><a href="tel:+998976560026">+998 97 656 00 26</a></p>
+        <h5 class="fw-bold">Telegram:</h5>
+        <p><a href="https://t.me/N_Saidakbar">@N_Saidakbar</a></p>
       </div>
     </div>
   </div>
@@ -247,11 +283,10 @@
 
 <!-- Footer -->
 <footer class="text-white text-center py-3">
-  <p class="mb-0">&copy; 2025 NemaCRM. Barcha huquqlar himoyalangan.</p>
+  <p class="mb-0">&copy; 2025 NemaCRM.</p>
   <div class="mt-2">
     <a href="#" class="text-white me-3"><i class="fab fa-telegram fa-lg"></i></a>
     <a href="#" class="text-white me-3"><i class="fab fa-instagram fa-lg"></i></a>
-    <a href="#" class="text-white"><i class="fab fa-github fa-lg"></i></a>
   </div>
 </footer>
 

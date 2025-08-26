@@ -17,7 +17,7 @@ from app_auth import forms
 User = get_user_model()
 
 today_date = date.today()
-day = today_date + timedelta(days=2)
+day = today_date + timedelta(days=30)
 
 # date → datetime qilib olish
 day_datetime = datetime.combine(day, datetime.min.time())

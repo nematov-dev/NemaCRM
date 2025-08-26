@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from app_page.models import NotificationModel
+from app_page.models import NotificationModel,NemaCRMPCPhotoModel,NemaCRMPhonePhotoModel
 
 @admin.register(NotificationModel)
 class NotificationModelAdmin(admin.ModelAdmin):
@@ -8,4 +8,7 @@ class NotificationModelAdmin(admin.ModelAdmin):
     search_fields = ['message']
     list_filter = ['created_at']
     ordering = ['-created_at']
+
+admin.register(NemaCRMPhonePhotoModel)
+admin.register(NemaCRMPCPhotoModel)
 
