@@ -231,8 +231,8 @@
     <div class="carousel-inner">
       {% for p in pc %}
         <div class="carousel-item {% if forloop.first %}active{% endif %}">
-          <a href="{{ p.url }}" data-bs-toggle="modal" data-bs-target="#imageModal{{ forloop.counter }}">
-            <img src="{{ p.url }}" class="device-img" alt="Desktop {{ forloop.counter }}">
+          <a href="{{ p.image.url }}" data-bs-toggle="modal" data-bs-target="#imageModal{{ forloop.counter }}">
+            <img src="{{ p.image.url }}" class="device-img" alt="Desktop {{ forloop.counter }}">
           </a>
         </div>
   
