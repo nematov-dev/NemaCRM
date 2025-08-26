@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from app_page.models import NotificationModel,NemaCRMPCPhotoModel,NemaCRMPhonePhotoModel
+from app_page.models import NotificationModel,NemaCRMPCPhotoModel
 
 @admin.register(NotificationModel)
 class NotificationModelAdmin(admin.ModelAdmin):
