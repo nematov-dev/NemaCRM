@@ -44,9 +44,9 @@ class LoginView(View):
                     login(request, user)
                     return redirect('app_dashboard:dashboard')
                 else:
-                    form.add_error(None, "Email yoki parol notug'ri!")
+                    form.add_error(None, "Telefon raqam yoki parol notug'ri!")
             else:
-                form.add_error(None, "Email raqam yoki parol notug'ri!")
+                form.add_error(None, "Telefon raqam raqam yoki parol notug'ri!")
         else:
             form.add_error(None, "Formani to‘ldiring!")
         return render(request, 'auth/signin.html', {'form': form})
@@ -60,7 +60,7 @@ def phone_view(request):
             request.session['phone'] = phone
             return redirect('app_auth:verify')
         else:
-            messages.error(request,"Bu email bilan foydalanuvchi allaqachon mavjud.")
+            messages.error(request,"Bu telefon raqam bilan foydalanuvchi allaqachon mavjud.")
     return render(request, 'auth/phone.html')
 
 def verify_view(request):

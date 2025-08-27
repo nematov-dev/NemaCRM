@@ -143,7 +143,6 @@
         {% if request.user.is_authenticated %}
             <li class="nav-item"><a class="nav-link" href="{% url 'app_dashboard:dashboard' %}">Tizimga qaytish</a></li>
         {% else %}
-            <li class="nav-item"><a class="nav-link" href="{% url 'app_auth:register' %}">Ro'yxatdan o'tish</a></li>
             <li class="nav-item"><a class="nav-link" href="{% url 'app_auth:login' %}">Tizimga kirish</a></li>
         {% endif %}
       </ul>
@@ -367,8 +366,8 @@ document.addEventListener("keydown", function(e) {
           <div class="card-body">
             <h5 class="fw-bold">Sinab ko'rish</h5>
             <p class="display-6 text-primary fw-bold">$0</p>
-            <p>"Boshlash" tugmasini bosing ro'yxatdan o'ting va 1 oylik tekin obunani sinab ko'ring!</p>
-            <a href="{% url 'app_auth:register' %}" class="btn btn-outline-primary">Boshlash</a>
+            <p>"Boshlash" tugmasini orqali admin bilan bog'laning va 1 oylik tekin obunani sinab ko'ring!</p>
+            <a href="https://t.me/N_Saidakbar" class="btn btn-outline-primary">Boshlash</a>
           </div>
         </div>
       </div>
