@@ -9,9 +9,17 @@
           {% if product.count == 0 %}
             <span class="badge bg-danger px-3 py-10" style="font-size: 12px;" >Sotuvda yo'q</span>
           {% elif product.count < 10 %}
-            <span class="badge bg-warning text-dark px-3 py-10" style="font-size: 12px;">Qolgan: {{ product.count }} dona</span>
+            <span class="badge bg-warning text-dark px-3 py-10" style="font-size: 12px;">Qolgan: {{ product.count }} {{ pruduct.quantity }} {% if product.unity == "dona" %}
+              ta
+            {% elif product.unity == "kg" %}
+              kg
+            {% endif %} </span>
           {% else %}
-            <span class="badge bg-success px-3 py-10" style="font-size: 12px;">Mavjud: {{ product.count }} dona</span>
+            <span class="badge bg-success px-3 py-10" style="font-size: 12px;">Mavjud: {{ product.count }} {{ pruduct.quantity }} {% if product.unity == "dona" %}
+              ta
+            {% elif product.unity == "kg" %}
+              kg
+            {% endif %}</span>
           {% endif %} <br>
           <!-- Rasm qismi -->
           <div class="card-img-top d-flex align-items-center justify-content-center bg-light"

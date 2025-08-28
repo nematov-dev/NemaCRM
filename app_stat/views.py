@@ -47,24 +47,27 @@ class StatView(LoginRequiredMixin,View):
         ).aggregate(total=Sum('price'))['total'] or 0
 
         # Barcha mahsulotlar soni
-        product_all_count = ProductModel.objects.all().count()
+        product_all_count = ProductModel.objects.filter(user=request.user).count()
         # Kam qolgan mahsulotlar 
         product_less_count = ProductModel.objects.filter(
-            count__lte=10
+            count__lte=10,user=request.user
         ).count()
         # Tugab qolgan mahsulotlar 
         product_not_count = ProductModel.objects.filter(
-            count=0
+            count=0,user=request.user
         ).count()
 
         # Top 5 eng ko‘p sotilgan mahsulotlar
-        product_sell_top = OrderModel.objects.values('product__name','product__unity').annotate(
-            total_sold=Sum('count')
-        ).order_by('-total_sold')[:5]
-
+        product_sell_top = (
+        OrderModel.objects
+        .filter(user=request.user)
+        .values('product__name', 'product__unity')
+        .annotate(total_sold=Sum('count'))
+        .order_by('-total_sold')[:5]
+    )
 
         # Kategoriya bo‘yicha top 5 sotuv (umumiy summa bo‘yicha)
-        category_sell_top = OrderModel.objects.values('product__category__name').annotate(
+        category_sell_top = OrderModel.objects.filter(user=request.user).values('product__category__name').annotate(
             total_sales=Sum(F('count') * F('price'))
         ).order_by('-total_sales')[:5]
 
