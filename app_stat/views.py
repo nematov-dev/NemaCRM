@@ -1,17 +1,27 @@
-from datetime import date,timedelta,datetime
+from datetime import timedelta,datetime
 
 from django.shortcuts import render
 from django.views import View
 from django.db.models import Sum,F
 from collections import defaultdict
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.utils import timezone
 
 
 from app_order.models import OrderModel
 from app_product.models import ProductModel
 
-today_date = timezone.localdate()
+from datetime import datetime
+import pytz
+
+# Toshkent timezone
+tashkent_tz = pytz.timezone("Asia/Tashkent")
+
+# Hozirgi vaqt Toshkent bo‘yicha
+now_in_tashkent = datetime.now(tashkent_tz)
+
+# Bugungi sana (har kuni o‘zgaradi, Toshkent bo‘yicha)
+today_date = now_in_tashkent.date()
+
 week_ago = today_date - timedelta(days=7)
 month_ago = today_date - timedelta(days=30)
 month_ago_3 = today_date - timedelta(days=90)
