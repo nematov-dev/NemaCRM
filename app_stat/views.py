@@ -13,19 +13,18 @@ from app_product.models import ProductModel
 from datetime import datetime
 import pytz
 
-# Toshkent timezone
-tashkent_tz = pytz.timezone("Asia/Tashkent")
+def get_dates():
+    tashkent_tz = pytz.timezone("Asia/Tashkent")
+    now_in_tashkent = datetime.now(tashkent_tz)
+    today_date = now_in_tashkent.date()
 
-# Hozirgi vaqt Toshkent bo‘yicha
-now_in_tashkent = datetime.now(tashkent_tz)
+    week_ago = today_date - timedelta(days=7)
+    month_ago = today_date - timedelta(days=30)
+    month_ago_3 = today_date - timedelta(days=90)
 
-# Bugungi sana (har kuni o‘zgaradi, Toshkent bo‘yicha)
-today_date = now_in_tashkent.date()
+    return today_date, week_ago, month_ago, month_ago_3
 
-week_ago = today_date - timedelta(days=7)
-month_ago = today_date - timedelta(days=30)
-month_ago_3 = today_date - timedelta(days=90)
-
+today_date, week_ago, month_ago, month_ago_3 = get_dates()
 
 class StatView(LoginRequiredMixin,View):
     def get(self,request):
